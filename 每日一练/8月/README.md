@@ -52,5 +52,5 @@
 
 ### 答案：
 
-- Runnable没有返回值；Callable可以返回执行结果
-- Callable接口的call()允许抛出异常；Runnable的run()不能抛出
+1. 两者最大的不同点是：实现Callable接口的任务线程能返回执行结果；而实现Runnable接口的任务线程不能返回结果；
+2. Callable接口的call()方法允许抛出异常；而Runnable接口的run()方法的异常只能在内部消化，不能继续上抛；

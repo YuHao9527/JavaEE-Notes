@@ -76,6 +76,8 @@ public class Views {
                     return cMenu();
                 case 2:
                     return delete();
+                case 3:
+                    return uMenu();
             }
         }
         return num;
@@ -107,15 +109,32 @@ public class Views {
      * @Param []
      */
     public Express insert() {
+        Express e = new Express();
         System.out.println("请跟据提示，输入快递信息：");
         System.out.println("请输入快递单号：");
         String number = scanner.nextLine();
         System.out.println("请输入快递公司：");
         String company = scanner.nextLine();
-        Express e = new Express();
+        //生成取件码
+        String code = randomCode();
         e.setCompany(company);
         e.setNumber(number);
+        e.setCode(code);
         return e;
+    }
+
+    /**
+     * @return java.lang.String
+     * @Author 0715-YuHao
+     * @Description 随机生成6位取件码
+     * @Date 2020/7/28 12:15
+     * @Param []
+     */
+    private String randomCode() {
+        // 获取当前时间戳，并转为字符串
+        String code = String.valueOf(System.currentTimeMillis());
+        // 截取字符串6位号码，最低到秒，以免重复
+        return code.substring(5, 11);
     }
 
     /**
@@ -160,13 +179,17 @@ public class Views {
      * @Date 2020/7/28 11:37
      * @Param [e] 快递对象
      */
-    public void update(Express e) {
+    public Express update() {
+        Express e = new Express();
         System.out.println("请输入新的快递单号：");
         String number = scanner.nextLine();
         System.out.println("请输入新的快递公司：");
         String company = scanner.nextLine();
+        String code = randomCode();
         e.setNumber(number);
         e.setCompany(company);
+        e.setCode(code);
+        return e;
     }
 
     /**
@@ -179,10 +202,9 @@ public class Views {
     public int delete() {
         System.out.println("是否确认删除?");
         System.out.println("1. 确认删除");
-        System.out.println("2. 取消操作");
         System.out.println("0. 退出");
         String text = scanner.nextLine();
-        return insertNum(text, 2, 2);
+        return insertNum(text, 1, 2);
     }
 
     /**
@@ -193,7 +215,7 @@ public class Views {
      * @Param [data]
      */
     public void printAll(HashMap<Integer, Express> data) {
-        if (data.size() == 0) {
+        if (0 == data.size()) {
             System.out.println("暂无快递信息");
         } else {
             for (int key : data.keySet()) {
@@ -210,9 +232,17 @@ public class Views {
      * @Date 2020/7/28 11:48
      * @Param []
      */
-    public String uMenu() {
+    public int uMenu() {
         System.out.println("请根据提示，进行取件：");
-        System.out.println("请输入您的取件码：");
+        System.out.println("1. 取快递");
+        System.out.println("0. 返回上一层目录");
+        String text = scanner.nextLine();
+        return insertNum(text, 1, 3);
+    }
+
+    //提示用户输入取件码
+    public String getExpress() {
+        System.out.println("请输入取件码：");
         String code = scanner.nextLine();
         int num = -1;
         try {
@@ -222,7 +252,7 @@ public class Views {
         }
         if (num < 100000 || num > 999999) {
             System.out.println("输入有误，请重新输入");
-            return uMenu();
+            return getExpress();
         }
         return code;
     }
@@ -237,13 +267,7 @@ public class Views {
         System.out.println("操作成功");
     }
 
-    // 操作失败提示
-    public void storeDefeat() {
-        System.out.println("数据上传失败，与服务器断开连接");
-    }
-
-    // 快递箱溢出提示
-    public void outOfExpress() {
-        System.out.println("操作失败，快递箱已满，请及时取出，才能继续存入！");
+    public void fail() {
+        System.out.println("操作失败");
     }
 }

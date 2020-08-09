@@ -1,8 +1,11 @@
 package controller;
 
 import bean.Express;
-import dao.ExpressDao;
 import view.Views;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
 /**
@@ -12,81 +15,109 @@ import java.util.HashMap;
  * @Date 2020/7/28 10:49
  */
 public class CourierClient {
-    private Views view;
-    private ExpressDao dao;
+    private ObjectInputStream ois;
+    private ObjectOutputStream oos;
+    private Views view = new Views();
 
-    public CourierClient(){
+    public CourierClient(ObjectInputStream ois, ObjectOutputStream oos) {
+        this.ois = ois;
+        this.oos = oos;
     }
 
-    public CourierClient(Views view, ExpressDao dao) {
-        this.view = view;
-        this.dao = dao;
-    }
-
-    public void start() {
-        int menu = view.cMenu();
-        switch (menu) {
-            case 0:
-                return;
-            case 1:{
-                //1. 提示输入快递信息
-                Express e = view.insert();
-                //2，此快递是否已经存储过
-                Express e2 = dao.findByNumber(e.getNumber());
-                //3. 存储快递
-                if (e2 == null) {
-                    //未存储过
-                    if (dao.add(e)) {
+    public void start() throws IOException, ClassNotFoundException {
+        while (true) {
+            int menu = view.cMenu();
+            oos.writeInt(menu);
+            oos.flush();
+            switch (menu) {
+                case 0:
+                    return;
+                case 1: {
+                    //1. 提示输入快递信息
+                    Express e = view.insert();
+                    oos.writeObject(e);
+                    oos.flush();
+                    Express e2 = (Express) ois.readObject();
+                    //3. 存储快递
+                    if (e2 == null) {
+                        //未存储过
+                        boolean insert = ois.readBoolean();
+                        if (insert) {
+                            view.success();
+                            view.printExpress(e);
+                        }else {
+                            view.fail();
+                        }
+                    } else {
+                        //单号在快递中已存在
+                        view.expressExit();
+                    }
+                }
+                break;
+                case 2: {
+                    //快递修改
+                    //1. 提示输入快递信息
+                    String number = view.findByNumber();
+                    //2. 查找数据
+                    oos.writeObject(number);
+                    oos.flush();
+                    Express e = (Express) ois.readObject();
+                    if (e == null) {
+                        view.printNull();
+                    } else {
                         view.printExpress(e);
-                    }else {
-                        view.outOfExpress();
-                    }
-                }else {
-                    //单号在快递中已存在
-                    view.expressExit();
-                }
-            }
-            break;
-            case 2:{ //快递修改
-                //1. 提示输入快递信息
-                String number = view.findByNumber();
-                //2. 查找数据
-                Express e = dao.findByNumber(number);
-                //3. 打印快递信息
-                if (e == null) {
-                    view.printNull();
-                }else {
-                    view.printExpress(e);
-                    //4. 提示修改
-                    view.update(e);
-                    view.printExpress(e);
-                }
-            }
-            break;
-            case 3:{
-                //删除快递
-                //1. 输入快递单号
-                String number = view.findByNumber();
-                //2. 查找快递对象
-                Express e = dao.findByNumber(number);
-                if (e == null) {
-                    view.printNull();
-                }else {
-                    view.printExpress(e);
-                    int type = view.delete();
-                    if (type == 1) {
-                        dao.delete(e);
-                        view.success();
+                        //4. 提示修改
+                        Express e2 = view.update();
+                        oos.writeObject(e2);
+                        oos.flush();
+                        boolean insert = ois.readBoolean();
+                        if (insert) {
+                            view.success();
+                            view.printExpress(e2);
+                        }else {
+                            view.fail();
+                        }
                     }
                 }
+                break;
+                case 3: {
+                    //删除快递
+                    //1. 输入快递单号
+                    String number = view.findByNumber();
+                    //2. 查找快递对象
+                    oos.writeObject(number);
+                    oos.flush();
+                    Express e = (Express) ois.readObject();
+                    if (e == null) {
+                        view.printNull();
+                    } else {
+                        view.printExpress(e);
+                        int type = view.delete();
+                        oos.writeInt(type);
+                        oos.flush();
+                        switch (type) {
+                            case 0:
+                                break;
+                            case 1:
+                                boolean insert = ois.readBoolean();
+                                if (insert) {
+                                    view.success();
+                                }else {
+                                    view.fail();
+                                }
+                                break;
+                            default:
+                        }
+                    }
+                }
+                break;
+                case 4: {
+                    //查看所有
+                    HashMap<Integer, Express> data = (HashMap<Integer, Express>) ois.readObject();
+                    view.printAll(data);
+                }
+                break;
             }
-            break;
-            case 4:{
-                //查看所有
-                HashMap<Integer, Express> data = dao.findAll();
-                view.printAll(data);
-            }
-            break;
         }
     }
 }

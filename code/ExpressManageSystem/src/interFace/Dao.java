@@ -21,8 +21,8 @@ public interface Dao {
     void delete(Express e) throws IOException;
     // 输出所有快递
     HashMap<Integer, Express> findAll();
-    //从服务器上下载数据
-    boolean getData();
+    //从文件中读取数据
+    boolean loadData();
     // 上传数据到服务器
     boolean putData();
 }

@@ -17,13 +17,15 @@ import java.util.concurrent.Executors;
  */
 public class Server {
 
-    private static final File file = new File("src//server//express.txt");
+    private ServerSocket server;
 
     public static void main(String[] args) throws IOException {
-        if (!file.exists()) {
-            file.createNewFile();
-        }
-        ServerSocket server = new ServerSocket(8888);
+        Server server = new Server();
+        server.start();
+    }
+
+    public void start() {
+        ServerSocket server = new ServerSocket(8800);
         System.out.println("服务器已启动...");
         while (true) {
             Socket socket = server.accept();

@@ -1,5 +1,7 @@
 package main;
 
+import controller.CourierClient;
+import controller.UserClient;
 import dao.ExpressDao;
 import view.Views;
 
@@ -12,20 +14,11 @@ import java.io.IOException;
  * @Date 2020/7/28 10:46
  */
 public class Main {
-    /**
-     * @Author 0715-YuHao
-     * @Description 初始化视图对象
-     * @Date 2020/8/4 13:51
-     */
-    private static final Views view = new Views();
-    /**
-     * @Author 0715-YuHao
-     * @Description 初始化dao对象
-     * @Date 2020/8/4 13:52
-     */
-    private static final ExpressDao dao = new ExpressDao();
+    private static Views view;
+    private static ExpressDao dao;
 
     public static void main(String[] args) throws IOException {
+        init();
         //1. 欢迎
         view.welcome();
         //从服务器下在数据
@@ -60,6 +53,18 @@ public class Main {
             }
         }
         view.bye();
+    }
+
+    /**
+     * @Author 0715-YuHao
+     * @Description 初始化
+     * @Date 12:52 2020/8/9
+     * @Param []
+     * @return void
+     **/
+    private static void init() {
+        view = new Views();
+        dao = new ExpressDao();
     }
 
 }

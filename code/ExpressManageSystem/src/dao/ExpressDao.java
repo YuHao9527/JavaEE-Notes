@@ -7,27 +7,23 @@ import java.io.*;
 import java.net.Socket;
 import java.util.HashMap;
 
+import java.util.List;
 import java.util.Random;
 
 /**
  * @ClassName ExpressDao
- * @Description 快递数据
+ * @Description 快递数据相关操作
  * @Author 0715-YuHao
  * @Date 2020/7/31 12:01
  */
 public class ExpressDao implements Dao {
+    private static final File file = new File("src//server//express.txt");
     /**
      * @Author 0715-YuHao
      * @Description 快递集合
      * @Date 2020/8/5 10:38
      */
     private static HashMap<Integer, Express> data;
-    /**
-     * @Author 0715-YuHao
-     * @Description 搭建客户端
-     * @Date 2020/8/5 10:38
-     */
-    private Socket socket;
     //快递数
     private int size;
     // 随机数
@@ -104,17 +100,35 @@ public class ExpressDao implements Dao {
         return data;
     }
 
+    /**
+     * @Author 0715-YuHao
+     * @Description 从文件中读取数据
+     * @Date 16:05 2020/8/9
+     * @Param []
+     * @return boolean
+     **/
     @Override
-    public boolean getData() {
-        try {
-            socket = new Socket("127.0.0.1", 8888);
-            InputStream is = socket.getInputStream();
-            ObjectInputStream ois = new ObjectInputStream(is);
-            data = (HashMap<Integer, Express>) ois.readObject();
-        } catch (IOException e) {
-            return false;
-        } catch (ClassNotFoundException ignored) {
-
+    public boolean loadData() {
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        if (file.length() > 0) {
+            try {
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+                Object obj = ois.readObject();
+                if (obj instanceof HashMap) {
+                    data = (HashMap<Integer, Express>) obj;
+                }
+                ois.close();
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+                return false;
+            }
         }
         return true;
     }

@@ -1,6 +1,8 @@
 package bean;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.Objects;
 
 /**
  * @ClassName Book
@@ -8,21 +10,17 @@ import java.io.Serializable;
  * @Author 0715-YuHao
  * @Date 2020/7/31 14:23
  */
-public class Book implements Comparable<Book>, Serializable {
+public class Book implements Serializable {
     /**
      * @Author 0715-YuHao
      * @Description 书名
      * @Date 2020/8/4 13:34
-     * @Param
-     * @return
      */
     private String title;
     /**
      * @Author 0715-YuHao
      * @Description 价格
      * @Date 2020/8/4 13:34
-     * @Param
-     * @return
      */
     private String price;
     /**
@@ -32,12 +30,12 @@ public class Book implements Comparable<Book>, Serializable {
      * @Param
      * @return
      */
-    private String date;
+    private Date date;
 
     public Book() {
     }
 
-    public Book(String title, String price, String date) {
+    public Book(String title, String price, Date date) {
         this.title = title;
         this.price = price;
         this.date = date;
@@ -59,11 +57,11 @@ public class Book implements Comparable<Book>, Serializable {
         this.price = price;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -78,49 +76,15 @@ public class Book implements Comparable<Book>, Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-
-        if (title != null ? !title.equals(book.title) : book.title != null) {
-            return false;
-        }
-        if (price != null ? !price.equals(book.price) : book.price != null) {
-            return false;
-        }
-        return date != null ? date.equals(book.date) : book.date == null;
+        return Objects.equals(title, book.title);
     }
 
     @Override
     public int hashCode() {
-        int result = title != null ? title.hashCode() : 0;
-        result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + (date != null ? date.hashCode() : 0);
-        return result;
+        return Objects.hash(title);
     }
 
-    /**
-     * @Author 0715-YuHao
-     * @Description 按价格比较
-     * @Date 2020/8/4 13:35
-     * @Param [o]
-     * @return int
-     */
-    @Override
-    public int compareTo(Book o) {
-        //默认升序
-        if (Float.valueOf(this.price) > Float.valueOf(o.price)) {
-            return 1;
-        }else if (Float.valueOf(this.price).equals(Float.valueOf(o.price))) {
-            //比较书名的首字符
-            return this.getTitle().charAt(0) - o.getTitle().charAt(0);
-        }else {
-            return -1;
-        }
-    }
 }

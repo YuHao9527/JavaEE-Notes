@@ -1,6 +1,7 @@
 package dao;
 
 import bean.Book;
+import bean.User;
 
 import java.io.*;
 import java.net.Socket;
@@ -16,15 +17,23 @@ import java.util.List;
  */
 public class BookDao implements Dao {
     //使用ArrayList集合存储图书
-    private List<Book> data;
-    private Socket socket;
+    private List<Book> data = new ArrayList<>();
+    private static final File file = new File("/src/server/book.txt");
+    private User admin = new User("user", "123456");
 
     public BookDao() {
     }
 
     @Override
-    public void add(Book book) {
-        data.add(book);
+    public boolean add(Book book) {
+        return data.add(book);
+    }
+
+    @Override
+    public boolean updata(Book b1, Book b2) {
+        data.remove(b1);
+        data.add(b2);
+        return true;
     }
 
     @Override
@@ -62,8 +71,8 @@ public class BookDao implements Dao {
     }
 
     @Override
-    public void delete(Book book) {
-        data.remove(book);
+    public boolean delete(Book book) {
+        return data.remove(book);
     }
 
     @Override
@@ -71,19 +80,23 @@ public class BookDao implements Dao {
         return data;
     }
 
+    /**
+     * @Author 0715-YuHao
+     * @Description 从文件中读取数据
+     * @Date 22:25 2020/8/10
+     * @Param []
+     * @return boolean
+     **/
     @Override
     public boolean getData() {
-        try {
-            //从服务器上下载数据
-            socket = new Socket("127.0.0.1", 8080);
-            InputStream is = socket.getInputStream();
-            ObjectInputStream ois = new ObjectInputStream(is);
-            data = (ArrayList<Book>) ois.readObject();
-            ois.close();
-        } catch (IOException e) {
-            return false;
-        } catch (ClassNotFoundException ignore) {
-
+        if (file.length() > 0) {
+            try {
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+                data = (ArrayList<Book>) ois.readObject();
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+                return false;
+            }
         }
         return true;
     }
@@ -91,8 +104,7 @@ public class BookDao implements Dao {
     @Override
     public boolean putData() {
         try {
-            OutputStream os = socket.getOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(os);
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
             oos.writeObject(data);
         } catch (IOException e) {
             return false;
@@ -101,12 +113,8 @@ public class BookDao implements Dao {
     }
 
     @Override
-    public void close() {
-        try {
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public boolean confirm(User user) {
+        return admin.equals(user);
     }
 
 }

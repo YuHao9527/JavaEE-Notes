@@ -1,14 +1,15 @@
 package server;
 
 import bean.Book;
-import dao.Data;
+import bean.User;
+import dao.BookDao;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
 
 /**
  * @ClassName Server
@@ -17,63 +18,171 @@ import java.util.concurrent.Executors;
  * @Date 2020/8/4 19:44
  */
 public class Server {
-    private static final File file = new File(Data.PATH_NAME);
+    private ServerSocket server;
+    private BookDao dao = new BookDao();
 
     public static void main(String[] args) throws IOException {
-        if (!file.exists()) {
-            file.createNewFile();
+        Server server = new Server();
+        server.start();
+    }
+
+    private void start() {
+        try {
+            server = new ServerSocket(8888);
+            System.out.println("服务器已启动...");
+            //创建缓存线程池
+            ExecutorService service = Executors.newCachedThreadPool();
+            while (true) {
+                Socket socket = server.accept();
+                System.out.println("一个客户端进入连接");
+                service.submit(() -> {
+                    receive(socket);
+                });
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        ServerSocket server = new ServerSocket(8080);
-        System.out.println("服务器已启动...");
-        //创建缓存线程池
-        ExecutorService service = Executors.newCachedThreadPool();
-        while (true) {
-            Socket socket = server.accept();
-            service.execute(() -> {
-                try {
-                    OutputStream os = socket.getOutputStream();
-                    ObjectOutputStream oos = new ObjectOutputStream(os);
-                    oos.writeObject(getData());
-                    System.out.println(Thread.currentThread().getName() + "数据传输完成");
-                    InputStream is = socket.getInputStream();
-                    ObjectInputStream ois = new ObjectInputStream(is);
-                    putData(ois.readObject());
-                    System.out.println(Thread.currentThread().getName() + "数据上传成功");
-                } catch (IOException | ClassNotFoundException e) {
-                    System.out.println(Thread.currentThread().getName() + "连接异常");
+
+    }
+
+    private void receive(Socket socket) {
+        InputStream is;
+        OutputStream os;
+        ObjectInputStream ois = null;
+        ObjectOutputStream oos = null;
+        try {
+            os = socket.getOutputStream();
+            is = socket.getInputStream();
+            ois = new ObjectInputStream(is);
+            oos = new ObjectOutputStream(os);
+            m:
+            while (true) {
+                int menu = ois.readInt();
+                switch (menu) {
+                    case 0:
+                        dao.putData();
+                        System.out.println("客户端断开连接");
+                        break m;
+                    case 1:
+                        User user = (User) ois.readObject();
+                        boolean confirm = dao.confirm(user);
+                        if (confirm) {
+                            mindex(ois, oos);
+                        }
+                        break;
+                    default:
                 }
-            });
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (ois != null) {
+                    ois.close();
+                }
+                if (oos != null) {
+                    oos.close();
+                }
+                if (socket != null) {
+                    socket.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
-    /**
-     * @Author 0715-YuHao
-     * @Description 从文件中获取数据
-     * @Date 2020/8/4 19:50
-     * @Param []
-     * @return java.lang.Object
-     */
-    public static Object getData() throws IOException, ClassNotFoundException {
-        if (file.length() > 0) {
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
-            return ois.readObject();
-        }else {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
-            oos.writeObject(new ArrayList<Book>());
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
-            return ois.readObject();
+    private void mindex(ObjectInputStream ois, ObjectOutputStream oos) throws IOException, ClassNotFoundException {
+        while (true) {
+            int index = ois.readInt();
+            switch (index) {
+                case 0:
+                    return;
+                case 1:
+                    insert(ois, oos);
+                    break;
+                case 2:
+                    updata(ois, oos);
+                    break;
+                case 3:
+                    delete(ois, oos);
+                    break;
+                case 4:
+                    search(ois, oos);
+                    break;
+                case 5:
+                    printAll(ois, oos);
+                    break;
+            }
         }
     }
 
-    /**
-     * @Author 0715-YuHao
-     * @Description 将数据存入文件
-     * @Date 2020/8/4 19:50
-     * @Param [o]
-     * @return void
-     */
-    public static void putData(Object o) throws IOException {
-        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
-        oos.writeObject(o);
+    private void insert(ObjectInputStream ois, ObjectOutputStream oos) throws IOException, ClassNotFoundException {
+        Book book = (Book) ois.readObject();
+        Book book1 = dao.findByTitle(book.getTitle());
+        oos.writeObject(book1);
+        oos.flush();
+        if (book1 == null) {
+            boolean insert = dao.add(book);
+            oos.writeBoolean(insert);
+            oos.flush();
+        }
     }
+
+    private void updata(ObjectInputStream ois, ObjectOutputStream oos) throws IOException, ClassNotFoundException {
+        String tite = (String) ois.readObject();
+        Book book = dao.findByTitle(tite);
+        oos.writeObject(book);
+        oos.flush();
+        if (book != null) {
+            Book book1 = (Book) ois.readObject();
+            boolean updata = dao.updata(book, book1);
+            oos.writeBoolean(updata);
+            oos.flush();
+        }
+    }
+
+    private void delete(ObjectInputStream ois, ObjectOutputStream oos) throws IOException, ClassNotFoundException {
+        String tite = (String) ois.readObject();
+        Book book = dao.findByTitle(tite);
+        oos.writeObject(book);
+        oos.flush();
+        if (book != null) {
+            int dindex = ois.readInt();
+            switch (dindex) {
+                case 0:
+                    return;
+                case 1:
+                    boolean delete = dao.delete(book);
+                    oos.writeBoolean(delete);
+                    oos.flush();
+                    break;
+                default:
+            }
+        }
+    }
+
+    private void search(ObjectInputStream ois, ObjectOutputStream oos) {
+
+    }
+
+    private void printAll(ObjectInputStream ois, ObjectOutputStream oos) throws IOException {
+        while (true) {
+            int menu = ois.readInt();
+            switch (menu) {
+                case 0:
+                    return;
+                case 1:
+                case 2:
+                case 3:
+                    oos.writeObject(dao.findAll());
+                    break;
+                default:
+            }
+        }
+
+
+    }
+
 }

@@ -1,6 +1,8 @@
 package dao;
 
 import bean.Book;
+import bean.User;
+
 import java.util.List;
 
 /**
@@ -10,19 +12,20 @@ import java.util.List;
  */
 public interface Dao {
     // 新增图书
-    void add(Book book);
+    boolean add(Book book);
+    boolean updata(Book b1, Book b2);
     // 通过图书名称精确查找图书
     Book findByTitle(String title);
     //模糊查找
     List<Book> fuzzySearch(String word);
     // 删除图书
-    void delete(Book book);
+    boolean delete(Book book);
     // 查看所有图书
     List<Book> findAll();
     //从服务器下载数据
     boolean getData();
     //上传数据到服务器
     boolean putData();
-    //关闭套接字
-    void close();
+    //验证用户
+    boolean confirm(User user);
 }

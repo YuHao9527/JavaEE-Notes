@@ -2,13 +2,11 @@ package view;
 
 
 import bean.Book;
-import dao.Data;
+import bean.User;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * @ClassName Views
@@ -18,6 +16,8 @@ import java.util.Scanner;
  */
 public class Views {
     private Scanner scanner = new Scanner(System.in);
+    private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
     //欢迎
     public void welcome() {
         System.out.println("欢迎使用xxx图书管理系统");
@@ -94,13 +94,19 @@ public class Views {
      */
     public Book insert() {
         System.out.println("请跟据提示，输入图书信息：");
-        System.out.println("请输入图书名称：");
-        String title = scanner.nextLine();
-        System.out.println("请输入图书价格：");
-        String  price = scanner.nextLine();
-        System.out.println("请输入图书出版日期(yyyy-MM-dd)：");
-        String date = scanner.nextLine();
-        return new Book(title, price, date);
+        while (true) {
+            try {
+                System.out.println("请输入图书名称：");
+                String title = scanner.nextLine();
+                System.out.println("请输入图书价格：");
+                String  price = scanner.nextLine();
+                System.out.println("请输入图书出版日期(yyyy-MM-dd)：");
+                Date date = format.parse(scanner.nextLine());
+                return new Book(title, price, date);
+            }catch (ParseException e) {
+                System.out.println("你的输入有误，请重新输入！");
+            }
+        }
     }
 
     /**
@@ -110,16 +116,23 @@ public class Views {
      * @Param [book]
      * @return void
      */
-    public void update(Book book) {
-        System.out.println("请输入新的图书名称：");
-        String title = scanner.nextLine();
-        System.out.println("请输入新的图书价格：");
-        String price = scanner.nextLine();
-        System.out.println("请输入新的图书出版日期(yyyy-MM-dd)：");
-        String date = scanner.nextLine();
-        book.setTitle(title);
-        book.setPrice(price);
-        book.setDate(date);
+    public Book update(Book book) {
+        while (true) {
+            try {
+                System.out.println("请输入新的图书名称：");
+                String title = scanner.nextLine();
+                System.out.println("请输入新的图书价格：");
+                String price = scanner.nextLine();
+                System.out.println("请输入新的图书出版日期(yyyy-MM-dd)：");
+                Date date = format.parse(scanner.nextLine());
+                book.setTitle(title);
+                book.setPrice(price);
+                book.setDate(date);
+                return book;
+            } catch (ParseException e) {
+                System.out.println("你的输入有误，请重新输入");
+            }
+        }
     }
 
     /**
@@ -205,58 +218,52 @@ public class Views {
     //从高到低排序
     public void highPriceSort(List<Book> bookList) {
         //数组排序
-        Collections.sort(bookList);
-        //默认为升序，倒叙遍历
-        for (int i = bookList.size() - 1; i >= 0; i--) {
-            printBook(bookList.get(i));
+        bookList.sort((o1, o2) -> {
+            if (Float.valueOf(o1.getPrice()) > Float.valueOf(o2.getPrice())) {
+                return 1;
+            }else if (Float.valueOf(o1.getPrice()) < Float.valueOf(o2.getPrice())){
+                return -1;
+            }else {
+                return 0;
+            }
+        });
+        Iterator<Book> iterator = bookList.iterator();
+        while (iterator.hasNext()) {
+            printBook(iterator.next());
         }
     }
 
     //从低到高排序
     public void lowPriceSort(List<Book> bookList) {
-        Collections.sort(bookList);
-        for (Book book: bookList) {
-            printBook(book);
+        bookList.sort((o1, o2) -> {
+            if (Float.valueOf(o1.getPrice()) > Float.valueOf(o2.getPrice())) {
+                return -1;
+            }else if (Float.valueOf(o1.getPrice()) < Float.valueOf(o2.getPrice())){
+                return 1;
+            }else {
+                return 0;
+            }
+        });
+        Iterator<Book> iterator = bookList.iterator();
+        while (iterator.hasNext()) {
+            printBook(iterator.next());
         }
     }
 
     //新旧排序(出版日期排序)
     public void dateSort(List<Book> bookList) {
-        //创建Book对象，用于排序调换
-        Book temp;
-        //创建时间格式化对象
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        //冒泡排序标记
-        boolean flag = true;
-        for (int i = 0; i < bookList.size(); i++) {
-            for (int j = i + 1; j < bookList.size(); j++) {
-                //获取对应日期的时间戳
-                long date1 = 0,date2 = 0;
-                try {
-                    date1 = sdf.parse(bookList.get(i).getDate()).getTime();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    date2 = sdf.parse(bookList.get(j).getDate()).getTime();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                //比较时间戳，大的为最新，小在前则调换位置
-                if (date1 < date2) {
-                    temp = bookList.get(i);
-                    bookList.set(i, bookList.get(j));
-                    bookList.set(j, temp);
-                    flag = false;
-                }
+        bookList.sort((o1, o2) -> {
+            if (o1.getDate().getTime() > o2.getDate().getTime()) {
+                return 1;
+            }else if (o1.getDate().getTime() < o2.getDate().getTime()) {
+                return -1;
+            }else {
+                return 0;
             }
-            //若一次冒泡中位置未发生替换，则排序完成退出循环
-            if (flag) {
-                break;
-            }
-        }
-        for (Book book: bookList) {
-            printBook(book);
+        });
+        Iterator<Book> iterator = bookList.iterator();
+        while (iterator.hasNext()) {
+            printBook(iterator.next());
         }
     }
 
@@ -270,22 +277,30 @@ public class Views {
         System.out.println("操作成功");
     }
 
-    //登录失败
-    public void error() {
-        System.out.println("对不起，用户名或密码错误");
+    // 操作失败提示
+    public void fail() {
+        System.out.println("操作失败");
     }
 
     //登录
-    public boolean login() {
-        System.out.println("请输入用户名：");
+    public User login() {
+        User user = new User();
+        System.out.println("请输入用户名(user)：");
         String username = scanner.nextLine();
-        System.out.println("请输入密码：");
+        System.out.println("请输入密码(123456)：");
         String password = scanner.nextLine();
-        return username.equals(Data.USER_NAME) && password.equals(Data.PASS_WORD);
+        user.setUsername(username);
+        user.setPassword(password);
+        return user;
     }
 
     //数据上传失败提示
     public void storeDefeat() {
         System.out.println("数据上传失败，与服务器断开连接");
+    }
+
+    //登录失败
+    public void loginFail() {
+        System.out.println("对不起，你输入的用户名或密码有误！");
     }
 }

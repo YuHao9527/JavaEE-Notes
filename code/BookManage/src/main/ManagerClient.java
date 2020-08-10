@@ -5,6 +5,10 @@ import bean.Book;
 import dao.BookDao;
 import view.Views;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,52 +18,60 @@ import java.util.List;
  * @Date 2020/7/31 16:05
  */
 public class ManagerClient {
-    private Views view;
-    private BookDao dao;
+    private Views view = new Views();
+    private ObjectInputStream ois;
+    private ObjectOutputStream oos;
 
-    public ManagerClient() {
+    public ManagerClient(ObjectOutputStream oos, ObjectInputStream ois) {
+        this.ois = ois;
+        this.oos= oos;
     }
 
-    public ManagerClient(Views view, BookDao dao) {
-        this.view = view;
-        this.dao = dao;
-    }
 
-    public void start() {
+    public void start() throws IOException, ClassNotFoundException {
         while (true) {
             int menu = view.cMenu();
+            oos.writeInt(menu);
+            oos.flush();
             switch (menu) {
                 case 0:
                     return;
                 case 1: {
                     //1. 提示输入图书信息
                     Book book = view.insert();
-                    //2，此图书是否已经存储过
-                    Book book2 = dao.findByTitle(book.getTitle());
-                    //3. 存储图书
-                    if (book2 == null) {
-                        //未存储过
-                        dao.add(book);
-                        view.printBook(book);
-                    } else {
-                        //图书已存在
-                        view.expressExit();
+                    oos.writeObject(book);
+                    oos.flush();
+                    boolean insert = ois.readBoolean();
+                    if (insert) {
+                        view.success();
+                    }else {
+                        view.fail();
                     }
                 }
                 break;
                 case 2: { //图书修改
                     //1. 提示输入图书信息
                     String title = view.findByTitle();
+                    oos.writeObject(title);
+                    oos.flush();
                     //2. 查找数据
-                    Book book = dao.findByTitle(title);
+                    Book book = (Book) ois.readObject();
                     //3. 打印快递信息
                     if (book == null) {
                         view.printNull();
                     } else {
                         view.printBook(book);
                         //4. 提示修改
-                        view.update(book);
-                        view.printBook(book);
+                        Book book1 =  view.update(book);
+                        oos.writeObject(book1);
+                        oos.flush();
+                        boolean updata = ois.readBoolean();
+                        if (updata) {
+                            view.success();
+                            view.printBook(book);
+                        }else {
+                            view.fail();
+                        }
                     }
                 }
                 break;
@@ -68,15 +80,26 @@ public class ManagerClient {
                     //1. 输入图书名称
                     String title = view.findByTitle();
                     //2. 查找快递对象
-                    Book book = dao.findByTitle(title);
+                    oos.writeObject(title);
+                    oos.flush();
+                    Book book = (Book) ois.readObject();
                     if (book == null) {
                         view.printNull();
                     } else {
                         view.printBook(book);
                         int type = view.delete();
-                        if (type == 1) {
-                            dao.delete(book);
-                            view.success();
+                        oos.writeInt(type);
+                        oos.flush();
+                        switch (type) {
+                            case 0:
+                                return;
+                            case 1:
+                                boolean delete = ois.readBoolean();
+                                if (delete) {
+                                    view.success();
+                                }
+                                break;
+                            default:
                         }
                     }
                 }
@@ -84,34 +107,30 @@ public class ManagerClient {
                 case 4: {
                     //模糊查找
                     String word = view.findByWord();
-                    List<Book> bookList = dao.fuzzySearch(word);
-                    if (bookList.size() == 0) {
-                        view.printNull();
-                    } else {
-                        view.success();
-                        for (Book book : bookList) {
-                            view.printBook(book);
-                        }
-                    }
+                    System.out.println("还没做功能");
                 }
                 break;
                 case 5:
                     // 查看所有图书
-                    int type = view.printOption();
-                    switch (type) {
-                        case 0:
-                            return;
-                        case 1:
-                            view.highPriceSort(dao.findAll());
-                            break;
-                        case 2:
-                            view.lowPriceSort(dao.findAll());
-                            break;
-                        case 3:
-                            view.dateSort(dao.findAll());
-                            break;
+                    while (true) {
+                        int type = view.printOption();
+                        oos.writeInt(type);
+                        oos.flush();
+                        switch (type) {
+                            case 0:
+                                return;
+                            case 1:
+                                view.highPriceSort((ArrayList<Book>)ois.readObject());
+                                break;
+                            case 2:
+                                view.lowPriceSort((ArrayList<Book>)ois.readObject());
+                                break;
+                            case 3:
+                                view.dateSort((ArrayList<Book>)ois.readObject());
+                                break;
+                        }
                     }
-                break;
+                default:
             }
         }
     }

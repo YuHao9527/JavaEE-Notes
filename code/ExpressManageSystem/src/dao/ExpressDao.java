@@ -2,13 +2,8 @@ package dao;
 
 import bean.Express;
 import interFace.Dao;
-
 import java.io.*;
-import java.net.Socket;
-import java.util.HashMap;
-
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @ClassName ExpressDao
@@ -17,16 +12,23 @@ import java.util.Random;
  * @Date 2020/7/31 12:01
  */
 public class ExpressDao implements Dao {
-    private static final File file = new File("src//server//express.txt");
+    /**
+     * @Author 0715-YuHao
+     * @Description 文件存储位置
+     * @Date 2020/8/9 16:35
+     */
+    private static final File file = new File("src\\server\\express.txt");
     /**
      * @Author 0715-YuHao
      * @Description 快递集合
      * @Date 2020/8/5 10:38
      */
-    private static HashMap<Integer, Express> data;
-    //快递数
-    private int size;
-    // 随机数
+    private static HashMap<Integer, Express> data = new HashMap<>();
+    /**
+     * @Author 0715-YuHao
+     * @Description 产生随机数
+     * @Date 2020/8/9 16:35
+     */
     private Random random = new Random();
 
     public ExpressDao() {
@@ -34,8 +36,7 @@ public class ExpressDao implements Dao {
 
     @Override
     public boolean add(Express e) {
-        size = data.size();
-        if (size == 100) {
+        if (100 == data.size()) {
             return false;
         }
         //1. 随机生成1个0-99的数字
@@ -43,34 +44,17 @@ public class ExpressDao implements Dao {
         do {
             num = random.nextInt(100);
         } while (data.containsKey(num));
-        //2. 生成取件码，并录入
-        String code = randomCode();
-        e.setCode(code);
         data.put(num, e);
         return true;
     }
 
-    /**
-     * @return java.lang.String
-     * @Author 0715-YuHao
-     * @Description 随机生成6位取件码
-     * @Date 2020/7/28 12:15
-     * @Param []
-     */
-    private String randomCode() {
-        // 获取当前时间戳，并转为字符串
-        String code = String.valueOf(System.currentTimeMillis());
-        // 截取字符串6位号码，最低到秒，以免重复
-        return code.substring(4, 10);
-    }
-
     @Override
     public Express findByNumber(String number) {
-        Express e = new Express();
-        e.setNumber(number);
-        for (int key : data.keySet()) {
-            if (data.get(key).equals(e)) {
-                return data.get(key);
+        Set<Map.Entry<Integer, Express>> set = data.entrySet();
+        Iterator<Map.Entry<Integer, Express>> iterator = set.iterator();
+        while (iterator.hasNext()) {
+            if (iterator.next().getValue().getNumber().equals(number)) {
+                return iterator.next().getValue();
             }
         }
         return null;
@@ -78,21 +62,40 @@ public class ExpressDao implements Dao {
 
     @Override
     public Express findByCode(String code) {
-        for (int key : data.keySet()) {
-            if (data.get(key).getCode().equals(code)) {
-                return data.get(key);
+        Set<Map.Entry<Integer, Express>> set = data.entrySet();
+        Iterator<Map.Entry<Integer, Express>> iterator = set.iterator();
+        while (iterator.hasNext()) {
+            if (iterator.next().getValue().getCode().equals(code)) {
+                return iterator.next().getValue();
             }
         }
         return null;
     }
 
     @Override
-    public void delete(Express e) {
-        for (int key: data.keySet()) {
-            if (data.get(key).equals(e)) {
-                data.remove(key);
+    public boolean delete(Express e) {
+        Set<Map.Entry<Integer, Express>> set = data.entrySet();
+        Iterator<Map.Entry<Integer, Express>> iterator = set.iterator();
+        while (iterator.hasNext()) {
+            if (iterator.next().getValue().equals(e)) {
+                data.remove(iterator.next().getKey());
+                return true;
             }
         }
+        return false;
+    }
+
+    @Override
+    public boolean updata(Express e, Express e2) {
+        Set<Map.Entry<Integer, Express>> set = data.entrySet();
+        Iterator<Map.Entry<Integer, Express>> iterator = set.iterator();
+        while (iterator.hasNext()) {
+            if (iterator.next().getValue().equals(e)) {
+                data.put(iterator.next().getKey(), e2);
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -109,19 +112,19 @@ public class ExpressDao implements Dao {
      **/
     @Override
     public boolean loadData() {
-        if (!file.exists()) {
+        /*if (!file.exists()) {
             try {
                 file.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
                 return false;
             }
-        }
+        }*/
         if (file.length() > 0) {
             try {
                 ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
                 Object obj = ois.readObject();
-                if (obj instanceof HashMap) {
+                if (obj instanceof Map) {
                     data = (HashMap<Integer, Express>) obj;
                 }
                 ois.close();
@@ -133,31 +136,21 @@ public class ExpressDao implements Dao {
         return true;
     }
 
-
+    /**
+     * @Author 0715-YuHao
+     * @Description 将数据写入文件
+     * @Date 2020/8/9 16:50
+     * @Param []
+     * @return boolean
+     */
     @Override
-    public boolean putData() {
+    public boolean storeData() {
         try {
-            OutputStream os = socket.getOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(os);
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
             oos.writeObject(data);
         }catch (IOException e) {
             return false;
         }
         return true;
-    }
-
-    /**
-     * @Author 0715-YuHao
-     * @Description 关闭套接字
-     * @Date 2020/8/5 10:53
-     * @Param []
-     * @return void
-     */
-    public void close() {
-        try {
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

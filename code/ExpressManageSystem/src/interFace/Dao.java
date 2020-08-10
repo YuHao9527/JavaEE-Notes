@@ -18,11 +18,13 @@ public interface Dao {
     // 通过取件码查找快递
     Express findByCode(String code) throws IOException;
     // 删除快递
-    void delete(Express e) throws IOException;
+    boolean delete(Express e) throws IOException;
+    // 修改快递
+    boolean updata(Express e, Express e2);
     // 输出所有快递
     HashMap<Integer, Express> findAll();
     //从文件中读取数据
     boolean loadData();
     // 上传数据到服务器
-    boolean putData();
+    boolean storeData();
 }

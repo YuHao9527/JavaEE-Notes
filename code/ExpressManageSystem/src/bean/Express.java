@@ -1,6 +1,7 @@
 package bean;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * @ClassName Express
@@ -62,10 +63,8 @@ public class Express implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Express express = (Express) o;
-
-        return number != null ? number.equals(express.number) : express.number == null;
+        return Objects.equals(number, express.number);
     }
 
     @Override

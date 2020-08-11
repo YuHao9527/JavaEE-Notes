@@ -7,6 +7,7 @@ import dao.BookDao;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -18,31 +19,38 @@ import java.util.concurrent.Executors;
  * @Date 2020/8/4 19:44
  */
 public class Server {
-    private ServerSocket server;
-    private BookDao dao = new BookDao();
+    private ServerSocket server = null;
+    private final BookDao dao = new BookDao();
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Server server = new Server();
         server.start();
     }
 
     private void start() {
         try {
-            server = new ServerSocket(8888);
+            server = new ServerSocket(8488);
             System.out.println("服务器已启动...");
+            dao.getData();
             //创建缓存线程池
             ExecutorService service = Executors.newCachedThreadPool();
             while (true) {
                 Socket socket = server.accept();
                 System.out.println("一个客户端进入连接");
-                service.submit(() -> {
-                    receive(socket);
-                });
+                service.submit(() -> receive(socket));
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }finally {
+            try {
+                if (server != null) {
+                    server.close();
+                }
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
 
+        }
     }
 
     private void receive(Socket socket) {
@@ -51,14 +59,12 @@ public class Server {
         ObjectInputStream ois = null;
         ObjectOutputStream oos = null;
         try {
-            os = socket.getOutputStream();
             is = socket.getInputStream();
+            os = socket.getOutputStream();
             ois = new ObjectInputStream(is);
             oos = new ObjectOutputStream(os);
-            m:
-            while (true) {
-                int menu = ois.readInt();
-                switch (menu) {
+            m: while (true) {
+                switch (ois.readInt()) {
                     case 0:
                         dao.putData();
                         System.out.println("客户端断开连接");
@@ -66,6 +72,8 @@ public class Server {
                     case 1:
                         User user = (User) ois.readObject();
                         boolean confirm = dao.confirm(user);
+                        oos.writeBoolean(confirm);
+                        oos.flush();
                         if (confirm) {
                             mindex(ois, oos);
                         }
@@ -121,8 +129,6 @@ public class Server {
     private void insert(ObjectInputStream ois, ObjectOutputStream oos) throws IOException, ClassNotFoundException {
         Book book = (Book) ois.readObject();
         Book book1 = dao.findByTitle(book.getTitle());
-        oos.writeObject(book1);
-        oos.flush();
         if (book1 == null) {
             boolean insert = dao.add(book);
             oos.writeBoolean(insert);
@@ -163,8 +169,11 @@ public class Server {
         }
     }
 
-    private void search(ObjectInputStream ois, ObjectOutputStream oos) {
-
+    private void search(ObjectInputStream ois, ObjectOutputStream oos) throws IOException, ClassNotFoundException {
+        String word = (String) ois.readObject();
+        List<Book> bookList = dao.fuzzySearch(word);
+        oos.writeObject(bookList);
+        oos.flush();
     }
 
     private void printAll(ObjectInputStream ois, ObjectOutputStream oos) throws IOException {

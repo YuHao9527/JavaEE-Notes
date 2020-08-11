@@ -2,7 +2,6 @@ package main;
 
 
 import bean.Book;
-import dao.BookDao;
 import view.Views;
 
 import java.io.IOException;
@@ -18,13 +17,13 @@ import java.util.List;
  * @Date 2020/7/31 16:05
  */
 public class ManagerClient {
-    private Views view = new Views();
-    private ObjectInputStream ois;
-    private ObjectOutputStream oos;
+    private final Views view = new Views();
+    private final ObjectInputStream ois;
+    private final ObjectOutputStream oos;
 
     public ManagerClient(ObjectOutputStream oos, ObjectInputStream ois) {
         this.ois = ois;
-        this.oos= oos;
+        this.oos = oos;
     }
 
 
@@ -44,8 +43,8 @@ public class ManagerClient {
                     boolean insert = ois.readBoolean();
                     if (insert) {
                         view.success();
-                    }else {
-                        view.fail();
+                    } else {
+                        view.expressExit();
                     }
                 }
                 break;
@@ -62,14 +61,14 @@ public class ManagerClient {
                     } else {
                         view.printBook(book);
                         //4. 提示修改
-                        Book book1 =  view.update(book);
+                        Book book1 = view.update(book);
                         oos.writeObject(book1);
                         oos.flush();
                         boolean updata = ois.readBoolean();
                         if (updata) {
                             view.success();
                             view.printBook(book);
-                        }else {
+                        } else {
                             view.fail();
                         }
                     }
@@ -92,7 +91,7 @@ public class ManagerClient {
                         oos.flush();
                         switch (type) {
                             case 0:
-                                return;
+                                break;
                             case 1:
                                 boolean delete = ois.readBoolean();
                                 if (delete) {
@@ -107,27 +106,53 @@ public class ManagerClient {
                 case 4: {
                     //模糊查找
                     String word = view.findByWord();
-                    System.out.println("还没做功能");
+                    oos.writeObject(word);
+                    oos.flush();
+                    List<Book> bookList = (List<Book>) ois.readObject();
+                    if (bookList.size() > 0) {
+                        for (Book book :
+                                bookList) {
+                            view.printBook(book);
+                        }
+                    }else {
+                        view.searchFail();
+                    }
                 }
                 break;
                 case 5:
                     // 查看所有图书
-                    while (true) {
+                    o: while (true) {
                         int type = view.printOption();
                         oos.writeInt(type);
                         oos.flush();
                         switch (type) {
                             case 0:
-                                return;
+                                break o;
                             case 1:
-                                view.highPriceSort((ArrayList<Book>)ois.readObject());
+                                List<Book> bookList = (List<Book>) ois.readObject();
+                                if (bookList.size() > 0) {
+                                    view.highPriceSort((ArrayList<Book>) ois.readObject());
+                                }else {
+                                    view.bookNull();
+                                }
                                 break;
                             case 2:
-                                view.lowPriceSort((ArrayList<Book>)ois.readObject());
+                                List<Book> bookList2 = (List<Book>) ois.readObject();
+                                if (bookList2.size() > 0) {
+                                    view.lowPriceSort((ArrayList<Book>) ois.readObject());
+                                }else {
+                                    view.bookNull();
+                                }
                                 break;
                             case 3:
-                                view.dateSort((ArrayList<Book>)ois.readObject());
+                                List<Book> bookList3 = (List<Book>) ois.readObject();
+                                if (bookList3.size() > 0) {
+                                    view.dateSort((ArrayList<Book>) ois.readObject());
+                                }else {
+                                    view.bookNull();
+                                }
                                 break;
+                            default:
                         }
                     }
                 default:

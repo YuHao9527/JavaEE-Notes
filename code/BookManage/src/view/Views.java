@@ -15,8 +15,8 @@ import java.util.*;
  * @Date 2020/7/31 13:55
  */
 public class Views {
-    private Scanner scanner = new Scanner(System.in);
-    private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+    private final Scanner scanner = new Scanner(System.in);
+    private final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
     //欢迎
     public void welcome() {
@@ -170,10 +170,9 @@ public class Views {
     public int delete() {
         System.out.println("是否确认删除?");
         System.out.println("1. 确认删除");
-        System.out.println("2. 取消操作");
-        System.out.println("0. 退出");
+        System.out.println("0. 取消操作");
         String text = scanner.nextLine();
-        return insertNum(text, 2, 2);
+        return insertNum(text, 1, 2);
     }
 
     /**
@@ -184,7 +183,7 @@ public class Views {
      * @return void
      */
     public void printBook(Book book) {
-        System.out.println("书名: " + book.getTitle() + "\t价格: " + book.getPrice() + "\t出版日期: " + book.getDate());
+        System.out.println("书名: " + book.getTitle() + "\t价格: " + book.getPrice() + "\t出版日期: " + format.format(book.getDate()));
     }
 
     /**
@@ -218,52 +217,25 @@ public class Views {
     //从高到低排序
     public void highPriceSort(List<Book> bookList) {
         //数组排序
-        bookList.sort((o1, o2) -> {
-            if (Float.valueOf(o1.getPrice()) > Float.valueOf(o2.getPrice())) {
-                return 1;
-            }else if (Float.valueOf(o1.getPrice()) < Float.valueOf(o2.getPrice())){
-                return -1;
-            }else {
-                return 0;
-            }
-        });
-        Iterator<Book> iterator = bookList.iterator();
-        while (iterator.hasNext()) {
-            printBook(iterator.next());
+        bookList.sort((o1, o2) -> Float.compare(Float.parseFloat(o2.getPrice()), Float.parseFloat(o1.getPrice())));
+        for (Book book : bookList) {
+            printBook(book);
         }
     }
 
     //从低到高排序
     public void lowPriceSort(List<Book> bookList) {
-        bookList.sort((o1, o2) -> {
-            if (Float.valueOf(o1.getPrice()) > Float.valueOf(o2.getPrice())) {
-                return -1;
-            }else if (Float.valueOf(o1.getPrice()) < Float.valueOf(o2.getPrice())){
-                return 1;
-            }else {
-                return 0;
-            }
-        });
-        Iterator<Book> iterator = bookList.iterator();
-        while (iterator.hasNext()) {
-            printBook(iterator.next());
+        bookList.sort((o1, o2) -> Float.compare(Float.parseFloat(o1.getPrice()), Float.parseFloat(o2.getPrice())));
+        for (Book book : bookList) {
+            printBook(book);
         }
     }
 
     //新旧排序(出版日期排序)
     public void dateSort(List<Book> bookList) {
-        bookList.sort((o1, o2) -> {
-            if (o1.getDate().getTime() > o2.getDate().getTime()) {
-                return 1;
-            }else if (o1.getDate().getTime() < o2.getDate().getTime()) {
-                return -1;
-            }else {
-                return 0;
-            }
-        });
-        Iterator<Book> iterator = bookList.iterator();
-        while (iterator.hasNext()) {
-            printBook(iterator.next());
+        bookList.sort((o1, o2) -> Long.compare(o2.getDate().getTime(), o1.getDate().getTime()));
+        for (Book book : bookList) {
+            printBook(book);
         }
     }
 
@@ -282,6 +254,11 @@ public class Views {
         System.out.println("操作失败");
     }
 
+    // 查询失败提示
+    public void searchFail() {
+        System.out.println("不好意思，查询失败");
+    }
+
     //登录
     public User login() {
         User user = new User();
@@ -294,13 +271,12 @@ public class Views {
         return user;
     }
 
-    //数据上传失败提示
-    public void storeDefeat() {
-        System.out.println("数据上传失败，与服务器断开连接");
-    }
-
     //登录失败
     public void loginFail() {
         System.out.println("对不起，你输入的用户名或密码有误！");
+    }
+
+    public void bookNull() {
+        System.out.println("暂无图书信息");
     }
 }

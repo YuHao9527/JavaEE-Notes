@@ -28,14 +28,14 @@ public class Server {
 
     public void start() {
         try {
-            server = new ServerSocket(8080);
+            server = new ServerSocket(8999);
             System.out.println("服务器已启动...");
             dao.loadData();
+            //创建缓冲线程池
+            ExecutorService service = Executors.newCachedThreadPool();
             while (true) {
                 Socket socket = server.accept();
                 System.out.println(socket.getInetAddress() + "客户端已连接");
-                //创建缓冲线程池
-                ExecutorService service = Executors.newCachedThreadPool();
                 service.submit(() -> {
                     receive(socket);
                 });

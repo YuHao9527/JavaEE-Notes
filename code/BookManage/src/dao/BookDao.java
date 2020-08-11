@@ -4,7 +4,6 @@ import bean.Book;
 import bean.User;
 
 import java.io.*;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,8 +17,8 @@ import java.util.List;
 public class BookDao implements Dao {
     //使用ArrayList集合存储图书
     private List<Book> data = new ArrayList<>();
-    private static final File file = new File("/src/server/book.txt");
-    private User admin = new User("user", "123456");
+    private static final File file = new File("src\\server\\book.txt");
+    private final User admin = new User("user", "123456");
 
     public BookDao() {
     }

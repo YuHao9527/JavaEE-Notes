@@ -13,7 +13,7 @@ import java.net.Socket;
  * @Date 2020/7/31 16:01
  */
 public class Client {
-    private Views view = new Views();
+    private static final Views view = new Views();
     private Socket socket;
 
     public static void main(String[] args) {
@@ -27,16 +27,18 @@ public class Client {
         ObjectOutputStream oos = null;
         ObjectInputStream ois = null;
         try {
-            socket = new Socket("127.0.0.1", 8888);
+            socket = new Socket("127.0.0.1", 8488);
             System.out.println("服务器连接成功");
             os = socket.getOutputStream();
             is = socket.getInputStream();
-            ois = new ObjectInputStream(is);
             oos = new ObjectOutputStream(os);
-            int menu = view.menu();
-            oos.writeInt(menu);
-            oos.flush();
+            ois = new ObjectInputStream(is);
+            //1. 欢迎
+            view.welcome();
             m: while (true) {
+                int menu = view.menu();
+                oos.writeInt(menu);
+                oos.flush();
                 switch (menu) {
                     case 0:
                         break m;
@@ -54,6 +56,7 @@ public class Client {
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
+            start();
         }finally {
             try {
                 if (oos != null) {
@@ -69,5 +72,6 @@ public class Client {
                 e.printStackTrace();
             }
         }
+        view.bye();
     }
 }

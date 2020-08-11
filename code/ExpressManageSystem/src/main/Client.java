@@ -15,7 +15,7 @@ import java.net.Socket;
  */
 public class Client {
     private static final Views view = new Views();
-    private static Socket socket;
+    private Socket socket;
 
     public static void main(String[] args) throws IOException {
         Client client = new Client();
@@ -28,7 +28,7 @@ public class Client {
         ObjectOutputStream oos = null;
         ObjectInputStream ois = null;
         try {
-            socket = new Socket("127.0.0.1", 8080);
+            socket = new Socket("127.0.0.1", 8999);
             System.out.println("服务器连接成功");
             os = socket.getOutputStream();
             is = socket.getInputStream();
@@ -36,8 +36,6 @@ public class Client {
             ois = new ObjectInputStream(is);
             //1. 欢迎
             view.welcome();
-            //从服务器下在数据
-            System.out.println("与服务器建立连接中");
             m: while (true) {
                 //2. 弹出身份选择菜单
                 int menu = view.menu();

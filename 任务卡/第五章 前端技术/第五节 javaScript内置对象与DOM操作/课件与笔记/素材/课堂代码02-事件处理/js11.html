@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript语言实例</title>
+</head>
+<body>
+    <h1 id="hid">JavaScript语言实例--表单事件</h1>
+    <form action="js10.html" name="myform" method="post" onsubmit="return doSubmit()">
+        账号：<input type="text" name="uname" onblur="checkUname()"/><br/><br/>
+        密码：<input type="password" name="upass"  onblur="checkUpass()" /><br/><br/>
+        邮箱：<input type="text" name="email"/><br/><br/>
+        <input type="submit" value="提交"/>
+    </form>
+</body>
+<script>
+    //表单提交事件处理程序
+    function doSubmit(){
+        return checkUname() && checkUpass();
+    }
+
+    //验证账号
+    function checkUname(){
+        var name = document.myform.uname.value;
+        if(name.length<=0){
+            alert("账号不可以为空");
+            return false;
+        }
+        return true;
+    }
+
+    //验证密码
+    function checkUpass(){
+        var pass = document.myform.upass.value;
+        if(pass.length<6){
+            alert("密码必须大于等于6位");
+            return false;
+        }
+        return true;
+    }
+</script>
+</html>

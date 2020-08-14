@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript中的DOM</title>
+</head>
+<body>
+    <!-- 注释说明 -->
+    <h1>JavaScript语言中HTML DOM</h1>
+
+    <h3>通过这个对象模型，JavaScript 获得创建动态 HTML 的所有力量：</h3>
+    <ul>
+        <li>JavaScript 能改变页面中的所有 HTML 元素</li>
+        <li class="cc">JavaScript 能改变页面中的所有 HTML 属性</li>
+        <li>JavaScript 能改变页面中的所有 CSS 样式</li>
+        <li class="cc">JavaScript 能删除已有的 HTML 元素和属性</li>
+        <li>JavaScript 能添加新的 HTML 元素和属性</li>
+        <li>JavaScript 能对页面中所有已有的 HTML 事件作出反应</li>
+        <li>JavaScript 能在页面中创建新的 HTML 事件</li>
+    </ul>
+    
+
+    <h3>我们重点学习HTML DOM的什么操作：</h3>
+    <ul>
+        <li>如何改变 HTML 元素的内容</li>
+        <li>如何改变 HTML 元素的样式（CSS）</li>
+        <li>如何对 HTML DOM 事件作出反应</li>
+        <li>如何添加和删除 HTML 元素</li>
+    </ul>
+
+    <h3>W3C DOM 标准被分为 3 个不同的部分：</h3>
+    <ol id="oid"><li>Core DOM - 所有文档类型的标准模型</li><li>XML DOM - XML 文档的标准模型</li><li>HTML DOM - HTML 文档的标准模型</li></ol>
+
+    <a id="aid" href="http://www.baidu.com" title="百度链接">百度</a>
+</body>
+<script>
+    var aa = document.getElementById("aid");
+    console.log(aa);
+    console.log(aa.href);
+    console.log(aa.title);
+    aa.title = "百度22"; //修改属性
+
+    var h1 = document.getElementsByTagName("h1");
+    console.log(h1[0]);
+    h1[0].style.color = "red";
+
+    var clist = document.getElementsByClassName("cc");
+    for(var i=0;i<clist.length;i++){
+        console.log(clist[i])
+    }
+
+    var ol = document.getElementById("oid");
+    var olist = ol.childNodes;
+    console.log(olist.length);
+    for(var i=0;i<olist.length; i++){
+        console.log(olist[i]);
+    }
+</script>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript中的DOM</title>
+</head>
+<body>
+    <h1>JavaScript语言中HTML DOM 操作</h1>
+    <ul>
+        <li><a href="https://www.baidu.com">百度</a></li>
+        <li><a href="https://www.163.com">网易</a></li>
+        <li><a href="https://www.sina.com">新浪</a></li>
+        <li><a href="https://www.qq.com">腾讯</a></li>
+    </ul>
+</body>
+<script>
+    //获取当前页面中的所有链接
+    //var alist = document.getElementsByTagName("a");
+    var alist = document.links;
+    for(var i=0; i<alist.length; i++){
+        console.log(alist[i].href,alist[i].innerHTML);
+        alist[i].title = alist[i].innerHTML+"的链接";
+    }
+</script>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript语言实例</title>
+</head>
+<body>
+    <h1>JavaScript语言实例--键盘事件onkeydown</h1>
+</body>
+<script>
+    window.document.onkeydown = function(ent){
+        //获取兼容的事件对象
+        var event = ent || window.event;
+
+        //输出键盘值
+        console.log(event.keyCode);
+    }
+</script>
+</html>

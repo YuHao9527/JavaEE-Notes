@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>JavaScript语言实例--内置对象</h1>
+</body>
+<script>
+    //内置对象--String字符串对象
+    var s1 = "ZhangSanFeng";
+    document.write(s1+"<br/>");
+    document.write(s1[5]+"<br/>");
+    document.write(s1.charAt(5)+"<br/>");
+    document.write(s1.substr(5,3)+"<br/>");
+    document.write(s1.substring(5,8)+"<br/>");
+    document.write("小写："+s1.toLowerCase()+"<br/>");
+    document.write("大写："+s1.toUpperCase()+"<br/>");
+    //子串查找
+    document.write(s1.indexOf("an")+"<br/>");
+    document.write(s1.lastIndexOf("an")+"<br/>");
+    //替换
+    document.write(s1.replace("SanFeng","WuJi")+"<br/>");
+
+    //全部替换
+    document.write("10,20,30,40".replace(/,/g,":")+"<br/>");
+
+    var str = "10:23:45:67:87:65";
+    console.log(str);
+    console.log(str.split(":"));
+
+    var s2 = " zhangsan ";
+    console.log("#"+s2+"#");
+    console.log("#"+s2.trim()+"#");
+</script>
+</html>

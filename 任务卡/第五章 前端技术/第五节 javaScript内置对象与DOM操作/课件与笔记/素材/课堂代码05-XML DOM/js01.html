@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript中的XML DOM</title>
+</head>
+<body>
+    <!-- 注释说明 -->
+    <h1>XML DOM：节点的遍历</h1>
+    <ul id="uid">
+        <li>成龙</li>
+        <li>甄子丹</li>
+        <li>李连杰</li>
+        <li>宋小宝</li>
+    </ul>
+</body>
+<script>
+   //获取ul中的所有li节点
+   var list = document.getElementById("uid").getElementsByTagName("li");
+   console.log("节点数量：",list.length);
+
+   //通过子节点获取
+   var list2 = document.getElementById("uid").childNodes;
+   console.log("节点数量：",list2.length);
+
+   //节点的遍历
+   for(var i=0; i<list2.length; i++){
+       //console.log(list2[i].nodeType);\
+       //判断是否是元素节点
+       if(list2[i].nodeType == 1){
+           //console.log(list2[i].innerHTML); //HTML DOM获取内容
+           console.log(list2[i].firstChild.nodeValue); //XML DOM获取内容
+       }
+   }
+</script>
+</html>

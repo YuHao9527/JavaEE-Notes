@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript中的XML DOM</title>
+</head>
+<body>
+    <h1>XML-DOM：改变节点的属性</h1>
+    <a id="aid" href="http://www.baidu.com">百度</a>
+</body>
+<script>
+    //获取上面超链接a元素节点
+    var a = document.getElementById("aid");
+    //通过已知的HTML DOM操作a节点属性
+    console.log(a.href);
+    a.title="百度网址";
+    //a.aa = "bb"; //添加aa属性值为bb 无效的
+
+    //使用XML DOM操作节点a的属性
+    console.log(a.getAttribute("href"));
+    a.setAttribute("aa","bb"); //通过XML DOM可以添加任何属性和值
+</script>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript语言实例</title>
+</head>
+<body>
+    <h1>JavaScript语言实例--获取事件源对象</h1>
+    <h2 onclick="fun(this)">2级标题1</h2>
+    <h2 id="hid">2级标题2</h2>
+</body>
+<script>
+    function fun(ob){
+        console.log("aaaaaaaaaa");
+        //console.log(ob);
+        ob.style.color = "green";
+    }
+
+    document.getElementById("hid").onclick = function(){
+        console.log("bbbbbbbbbbb");
+        //此种事件绑定方式，this就表示当前事件源对象
+        //console.log(this);
+        this.style.color = "red";
+    }
+</script>
+</html>

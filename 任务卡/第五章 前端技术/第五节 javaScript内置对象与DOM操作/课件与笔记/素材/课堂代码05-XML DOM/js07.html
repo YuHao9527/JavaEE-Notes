@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript中的XML DOM</title>
+    <style>
+        select{width:100px;height:200px;border:1px solid #ddd;float:left;}
+        div{width:100px;height:200px;float:left;text-align:center;padding-top:50px;}
+    </style>
+</head>
+<body>
+    <h1>XML DOM 操作-select对象</h1>
+    <select id="sid1" size="10" multiple>
+        <option value="0">邓丽君</option>
+        <option value="1">张国荣</option>
+        <option value="2">梅艳芳</option>
+        <option value="3">黄家驹</option>
+        <option value="4">迈克尔.杰克逊</option>
+        <option value="5">姚贝娜</option>
+        <option value="6">张雨生</option>
+    </select>
+    <div>
+        <button onclick="doMove('sid1','sid2')">>></button>
+        <br/><br/><br/><br/>
+        <button onclick="doMove('sid2','sid1')"><<</button>
+    </div>
+    <select id="sid2" size="10" multiple></select>
+</body>
+<script>
+   function doMove(d1,d2){
+       //获取对应的下拉框节点对象
+       var select1 = document.getElementById(d1);
+       var select2 = document.getElementById(d2);
+       //获取第一个下拉框中的所有option下拉项节点对象
+       var list = select1.getElementsByTagName("option");
+       //遍历并判断是否选中
+       for(var i=0; i<list.length; i++){
+           if(list[i].selected){
+               list[i].selected = false;
+               select2.appendChild(list[i]); //使用XML DOM移动下拉项
+               i--;
+           }
+       }
+   }
+</script>
+</html>

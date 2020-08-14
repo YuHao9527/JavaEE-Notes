@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>JavaScript语言实例--内置对象</h1>
+</body>
+<script>
+    //内置对象--Date日期对象
+
+    function formatDate(dd){
+        if(!dd instanceof Date){
+            return;
+        }
+        var y = dd.getFullYear(),
+            m = dd.getMonth()+1,
+            d = dd.getDate(),
+            hh = dd.getHours(),
+            mm = dd.getMinutes(),
+            ss = dd.getSeconds();
+        //判断单位数字前补零操作
+        hh = hh<10?'0'+hh:hh;
+        mm = mm<10?'0'+mm:mm;
+        ss = ss<10?'0'+ss:ss;
+        return y+"-"+m+"-"+d+" "+hh+":"+mm+":"+ss;
+    }
+
+    var dd = new Date();
+    //从1970年1月1日零时零分0秒至今的毫秒数
+    document.write("时间戳："+dd.valueOf());
+    
+    document.write("<h2>"+formatDate(dd)+"</h2>");
+</script>
+</html>

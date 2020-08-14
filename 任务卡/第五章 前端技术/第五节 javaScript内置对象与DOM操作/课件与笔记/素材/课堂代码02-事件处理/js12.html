@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript语言实例</title>
+</head>
+<body>
+    <h1 id="hid">JavaScript语言实例--change事件</h1>
+    <select name="sid" id="sid">
+        <option value="">-请选择-</option>
+        <option value="1">北京</option>
+        <option value="2">河北</option>
+        <option value="3">天津</option>
+        <option value="4">河南</option>
+        <option value="5">山西</option>
+    </select>
+    <select id="cid"></select>
+</body>
+<script>
+    var data = new Array();
+    data[1] = ["海淀区","朝阳区","丰台区","昌平区"];
+    data[2] = ["石家庄","保定","邯郸","邢台"];
+    data[3] = ["河东区","河西区","河北区","南开区"];
+    data[4] = ["郑州","洛阳","开封","驻马店"];
+    data[5] = ["太原","大同","吕梁","运城"];
+
+    //获取两个下拉框元素对象
+    var sid = document.getElementById("sid");
+    var cid = document.getElementById("cid");
+    //绑定change事件
+    sid.onchange = function(){
+        //获取下拉框中的值
+        var v = this.value;
+        cid.length = 0; //删除cid的下拉项
+        //判断并循环对应城市信息
+        if(v != ""){
+            for(var i=0; i<data[v].length; i++){
+                //创建一个下拉项并添加到cid下拉框中
+                cid.add(new Option(data[v][i],i));
+            }
+        }
+    }
+</script>
+</html>

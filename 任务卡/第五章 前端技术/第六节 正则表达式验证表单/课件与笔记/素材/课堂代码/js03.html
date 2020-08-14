@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript中的正则表达式</title>
+</head>
+<body>
+    <h1>JavaScript中的正则表达式分割和替换</h1>
+</body>
+<script>
+    var str = "23:45:67:89:87:63";
+    console.log(str.split(":")); //(6) ["23", "45", "67", "89", "87", "63"] 使用子串拆分
+
+    str = "23:45;67:89!87#63";
+    console.log(str.split(/[^0-9]/)); //(6) ["23", "45", "67", "89", "87", "63"] 使用正则拆分
+
+
+    str = "23:45;67:89!87#63";
+    //将上面子串中的分隔符统一替换成逗号，
+    console.log(str.replace(/[^0-9]/g,",")); //23,45,67,89,87,63
+
+    str = "<b>aaa</b><b>bb>b</b><b>ccc</b>";
+    //将上面子串中的<b></b>标签替换成<i></i>   下面其中$1表示重复正则中第一个小括号中内容
+    console.log(str.replace(/<b>(.*?)<\/b>/g,"<i>$1</i>")); //.*是贪婪匹配（最大） .*?是拒绝贪婪匹配（最小）
+
+    console.log("=========================================");
+
+    str = "04/28/2020"; //西方日期格式，请使用正则替换成中国的[年-月-日]格式
+    console.log(str.replace(/(\d{2})\/(\d{2})\/(\d{4})/,"$3-$1-$2"));
+    //其中$1，$2 $3表示重复正则中第一、第二、第三个小括号中内容
+</script>
+</html>

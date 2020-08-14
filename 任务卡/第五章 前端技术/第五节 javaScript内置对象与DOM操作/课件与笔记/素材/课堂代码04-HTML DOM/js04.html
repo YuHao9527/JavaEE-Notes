@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript中的DOM</title>
+</head>
+<body>
+    <h1>JavaScript语言中HTML DOM 操作--图片延迟加载</h1>
+    <img src="./images/HLL-11_xuandong.gif" res="./images/11.jpg"/>
+    <img src="./images/HLL-11_xuandong.gif" res="./images/22.jpg"/>
+    <img src="./images/HLL-11_xuandong.gif" res="./images/33.jpg"/>
+    <img src="./images/HLL-11_xuandong.gif" res="./images/44.jpg"/>
+</body>
+<script>
+    setTimeout(function(){
+        //获取网页中所有的图片
+        var mlist = document.images;
+        //遍历
+        for(var i=0; i<mlist.length; i++){
+            mlist[i].src = mlist[i].getAttribute("res");
+            mlist[i].width = 100;
+        }
+    },3000);
+    
+</script>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript语言</title>
+</head>
+<body>
+    <h1>JavaScript中的BOM--navigator浏览器</h1>
+</body>
+<script type="text/javascript">
+    with(document) {
+         write ("你的浏览器信息：<ul>");
+         write ("<li>代码："+navigator.appCodeName+"</li>");
+         write ("<li>名称："+navigator.appName+"</li>");
+         write ("<li>版本："+navigator.appVersion+"</li>");
+         write ("<li>语言："+navigator.language+"</li>");
+         write ("<li>编译平台："+navigator.platform+"</li>");
+         write ("<li>用户表头："+navigator.userAgent+"</li>");
+         write ("</ul>");
+    }
+    
+    //判断当前浏览器
+    var explorer =navigator.userAgent ;
+    //ie 
+    if (explorer.indexOf("MSIE") >= 0) {
+        alert("ie");
+    }
+    //firefox 
+    else if (explorer.indexOf("Firefox") >= 0) {
+        alert("Firefox");
+    }
+    //Chrome
+    else if(explorer.indexOf("Chrome") >= 0){
+        alert("Chrome");
+    }
+    //Opera
+    else if(explorer.indexOf("Opera") >= 0){
+        alert("Opera");
+    }
+    //Safari
+    else if(explorer.indexOf("Safari") >= 0){
+        alert("Safari");
+    } 
+    //Netscape
+    else if(explorer.indexOf("Netscape")>= 0) { 
+        alert('Netscape'); 
+    }
+    
+</script>
+</html>

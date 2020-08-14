@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript语言实例</title>
+    <style>
+        div,img,ul,li{margin:0px;padding:0px;}
+        #did{width:384px;height:240px;}
+        #did img{display:none;}
+        #did img:first-child{display:block}
+    </style>
+</head>
+<body>
+    <h1>JavaScript语言实例--mouse鼠标移入和移出事件</h1>
+    <div id="did" onmouseover="doStop()" onmouseout="doStart()">
+        <img src="./images/11.jpg" width="384"/>
+        <img src="./images/22.jpg" width="384"/>
+        <img src="./images/33.jpg" width="384"/>
+        <img src="./images/44.jpg" width="384"/>
+    </div>
+</body>
+<script>
+    var m = 1;
+    var mytime = null;
+    //定义函数展示对应的图片
+    function show(x){
+        var mlist = document.getElementById("did").getElementsByTagName("img");
+        for(var i=0; i<mlist.length; i++){
+            if(x == i+1){
+                mlist[i].style.display = "block";
+            }else{
+                mlist[i].style.display = "none";
+            }
+        }
+    }
+
+    //开启定时轮播图片
+    function doStart(){
+        if(mytime == null){
+            mytime = setInterval(function(){
+                m++;
+                show(m);
+                if(m>=4){
+                    m = 0;
+                }
+            }, 2000);
+        }
+    }
+
+    //停止轮播图片
+    function doStop(){
+        if(mytime != null){
+            clearInterval(mytime);
+            mytime = null;
+        }
+    }
+
+    doStart();
+</script>
+</html>

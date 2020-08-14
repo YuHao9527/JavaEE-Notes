@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript中的DOM</title>
+</head>
+<body>
+    <!-- 注释说明 -->
+    <h1>JavaScript语言中HTML DOM</h1>
+    <h3 id ="hid">我们重点学习HTML DOM的什么操作：</h3>
+    <ul id="uid">
+        <li>如何改变 HTML 元素的内容</li>
+        <li>如何改变 HTML 元素的样式（CSS）</li>
+        <li>如何对 HTML DOM 事件作出反应</li>
+        <li>如何添加和删除 HTML 元素</li>
+    </ul>
+</body>
+<script>
+   //获取h3元素节点对象
+   var hid = document.getElementById("hid");
+   //输出当前节点的名字、值和类型
+   console.log(hid.nodeName); //H3
+   console.log(hid.nodeValue); //null
+   console.log(hid.nodeType);  //1
+   //获取当前节点对象的第一个子节点的值和类型
+   console.log(hid.childNodes[0].nodeValue); //就是内容
+   console.log(hid.childNodes[0].nodeType); //3
+   
+</script>
+</html>

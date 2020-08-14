@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="hid">JavaScript语言实例--单击事件</h1>
+    <button onclick="fun()">点击我</button>
+    <ul id="uid">
+        <li>AAAAA</li>
+        <li>BBBBB</li>
+        <li>CCCCC</li>
+        <li>DDDDD</li>
+    </ul>
+    <ol>
+        <li>1111111</li>
+        <li>2222222</li>
+    </ol>
+</body>
+<script>
+   function fun(){
+        console.log('hello js');
+        //获取id属性值为hid的元素标签
+        var hid = document.getElementById("hid");
+        //输出元素标签之间的文本内容
+        console.log(hid.innerHTML);
+        //修改标签之间的内容
+        hid.innerHTML = "JavaScript语言实例--元素操作";
+        //改变 HTML 元素的样式
+        hid.style.color = "red";
+        hid.style.backgroundColor = "#ddd";
+   }
+
+   //获取当前网页中的所有li元素标签
+   //var mlist = document.getElementsByTagName("li");
+   var mlist = document.getElementById("uid").getElementsByTagName("li");
+   
+   //遍历输出
+   for(var i in mlist){
+       if(!isNaN(i)){
+          console.log(mlist[i].innerHTML);
+          mlist[i].style.color="red";
+       }
+   }
+
+</script>
+</html>

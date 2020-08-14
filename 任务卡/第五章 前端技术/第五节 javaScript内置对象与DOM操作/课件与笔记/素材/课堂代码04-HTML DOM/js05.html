@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript中的DOM</title>
+</head>
+<body>
+    <h1>JavaScript语言中HTML DOM 操作</h1>
+    <form></form>
+    <form action="js01.html" method="post" name="myform">
+        账号：<input type="text" name="uname" value="wangwu7"/><br/>
+    </form>
+    <button onclick="doSubmit()">点击提交</button>
+</body>
+<script>
+    console.log(document.forms.length);
+    //获取上面form表单中账号信息
+    console.log(document.forms[1].uname.value); //*
+    console.log(document.forms.item(1).uname.value);
+    console.log(document.myform.uname.value); //*
+    console.log(document['myform'].uname.value);
+    console.log(document.forms.myform.uname.value);
+    console.log(document.forms['myform'].uname.value);
+
+    function doSubmit(){
+        document.myform.action = "js02.html";
+        //document.myform.method = "get";
+        document.myform.submit(); //获取form表单并执行提交
+    }
+</script>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript中的XML DOM</title>
+    <style>
+        #did{width:400px;border:1px solid blue;}
+        #did img{width:400px;}
+        #mid img{width:80px;border:2px solid #fff;margin:2px;}
+        #mid img:hover{border:2px solid red;}
+    </style>
+</head>
+<body>
+    <h1>XML-DOM：节点的替换</h1>
+    <div id="did"><img src="./images/11.jpg"/></div>
+    <div id="mid">
+        <img src="./images/11.jpg"/>
+        <img src="./images/22.jpg"/>
+        <img src="./images/33.jpg"/>
+        <img src="./images/44.jpg"/>
+    </div>
+    <h4>双击图片可实现图片的替换</h4>
+</body>
+<script>
+    //获取id属性值为did的节点对象
+    var did = document.getElementById("did");
+    //获取id属性值为mid节点中的所有图片img元素节点
+    var list = document.getElementById("mid").getElementsByTagName("img");
+    //遍历图片节点，并绑定鼠标双击事件
+    for(var i=0; i<list.length; i++){
+        list[i].ondblclick = function(){
+            did.replaceChild(this.cloneNode(),did.firstChild); //子节点替换
+        }
+    }
+</script>
+</html>

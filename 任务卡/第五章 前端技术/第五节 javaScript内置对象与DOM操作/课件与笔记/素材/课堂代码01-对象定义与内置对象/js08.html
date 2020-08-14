@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>JavaScript语言实例--定时器</h1>
+    <h2  id="hid">计数器：0</h2>
+    <button onclick="doStop()">停止</button>
+</body>
+<script>
+    var m=0,mytime=null;
+
+    function doRun(){
+        m++;
+        document.getElementById("hid").innerHTML = "计数器："+m;
+        
+        mytime = setTimeout(doRun,1000);
+    }
+    
+    doRun();
+    
+    function doStop(){
+        clearTimeout(mytime);
+    }
+    
+    
+    /*
+    m = 0;
+    var mytime = setInterval(function(){
+        m++;
+        document.getElementById("hid").innerHTML = "计数器："+m;
+    },1000)
+
+    function doStop(){
+        clearInterval(mytime);
+    }
+    */
+
+    /*
+    //定义时3秒后执行参数中的函数
+    setTimeout(function(){
+        console.log("Hello JS!");
+    },3000);
+
+
+    //定时每隔1秒执行参数回调函数一次
+    var m = 0;
+    setInterval(function(){
+        m++;
+        console.log("Hello "+m);
+    },1000)
+    */
+</script>
+</html>

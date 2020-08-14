@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>JavaScript语言实例--js操作元素标签属性（放大和缩小）</h1>
+    <button onclick="dofun(1)">放大</button>
+    <button onclick="dofun(2)">缩小</button>
+    <button onclick="dofun(3)">隐藏</button>
+    <br/><br/>
+    <div style="width:200px;height:200px;background-color:#ddd;" id="did"></div>
+</body>
+<script>
+    var width=200,height=200;
+    var did = document.getElementById("did");
+
+    function dofun(m){
+        switch(m){
+            case 1:
+                width += 10;
+                height += 10;
+                did.style.width = width+"px";
+                did.style.height = height+"px";
+                break;
+            case 2:
+                width -= 10;
+                height -= 10;
+                did.style.width = width+"px";
+                did.style.height = height+"px";
+                break;
+            case 3:
+                did.style.display = "none";
+                break;
+        }
+    }
+</script>
+</html>

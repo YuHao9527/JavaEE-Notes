@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        //内置对象--Array数组
+        var a1 = new Array(); //定义一个空数组
+        var a2 = new Array(10); //定义一个长度为10数组（值：undefined）
+        var a3 = new Array(10,20,30); //定义一个指定数值的数组
+
+        console.log(a1.length);
+        console.log(a2.length);
+        console.log(a3.length);
+
+        var a4 = [10,20,30,40,50]; //快捷定义数组
+
+        //数组的遍历
+        for(var i=0; i<a4.length;i++){
+            console.log(i,"=>",a4[i]);
+        }
+
+        for(var i=a4.length-1; i>=0;i--){
+            console.log(i,"=>",a4[i]);
+        }
+
+        for(var i in a4){
+            console.log(i,"=>",a4[i]);
+        }
+
+        a4.forEach(function(v){
+            console.log(v);
+        });
+
+        //数组的方法：
+        console.log(a4.toString());
+        console.log(a4.join(":"));
+        var aa = [1,2,3];
+        console.log(aa.concat(4,5));
+
+        var b = [10,50,30,20,70,40];
+        console.log(b.join(":"));
+        console.log(b.sort().join(":"));
+        console.log(b.reverse().join(":"));
+
+        var aa = new Array(10,20,30); 
+        console.log(aa.join(":"));
+        aa.push(50);
+        aa.push(40);
+        console.log(aa.join(":"));
+        aa.pop();
+        console.log(aa.join(":"));
+
+        //清空
+        console.log(b.join(":"));
+        b.length = 3;
+        console.log(b.join(":"));
+        b = [];
+        console.log(b.join(":"));
+    </script>
+</head>
+<body>
+    <h1>JavaScript语言实例--内置对象</h1>
+</body>
+</html>

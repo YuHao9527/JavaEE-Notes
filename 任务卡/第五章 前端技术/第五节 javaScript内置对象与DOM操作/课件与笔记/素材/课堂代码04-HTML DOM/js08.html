@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript中的DOM</title>
+    <style>
+        select,option,div,button{margin:0px;padding:0px;}
+        #lid,#rid,div{
+            width:80px;
+            height:260px;
+            float:left;
+        }
+        div{
+            text-align:center;
+            padding-top:60px;
+        }
+    </style>
+</head>
+<body>
+    <h1>JavaScript语言中HTML DOM 操作-table对象</h1>
+    <table id="tid" width="500" border="1">
+        <thead>
+            <tr>
+                <th>学号</th>
+                <th>姓名</th>
+                <th>性别</th>
+                <th>年龄</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1001</td>
+                <td>张三</td>
+                <td>男</td>
+                <td>20</td>
+                <td><button onclick="dodel(this)">删除</button></td>
+            </tr>
+            <tr>
+                <td>1002</td>
+                <td>李四</td>
+                <td>女</td>
+                <td>21</td>
+                <td><button onclick="dodel(this)">删除</button></td>
+            </tr>
+            <tr>
+                <td>1003</td>
+                <td>王五</td>
+                <td>男</td>
+                <td>22</td>
+                <td><button onclick="dodel(this)">删除</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <br/><br/><br/>
+    <h2>添加学生信息</h2>
+    <form action="#" name="myform" onsubmit="return doAdd()">
+        学号：<input type="text" name="sno"/><br/><br/>
+        姓名：<input type="text" name="name"/><br/><br/>
+        性别：<input type="text" name="sex"/><br/><br/>
+        年龄：<input type="text" name="age"/><br/><br/>
+        <input type="submit" value="添加"/>
+    </form>
+</body>
+<script>
+   //执行数据删除操作
+   function dodel(bt){
+       //获取当前表格元素节点对象
+       var tab  = document.getElementById("tid");
+       tab.deleteRow(bt.parentNode.parentNode.rowIndex);
+   }
+   
+   function doAdd(){
+       //获取输入框中的内容
+       var sno = document.myform.sno.value;
+       var name = document.myform.name.value;
+       var sex = document.myform.sex.value;
+       var age = document.myform.age.value;
+
+       //获取当前表格对象并申请添加一行
+       var row = document.getElementById("tid").insertRow();
+       //为当前行添加一个个字段信息
+       row.insertCell(0).innerHTML = sno;
+       row.insertCell(1).innerHTML = name;
+       row.insertCell(2).innerHTML = sex;
+       row.insertCell(3).innerHTML = age;
+       row.insertCell(4).innerHTML = '<button onclick="dodel(this)">删除</button>';
+
+       //清空form表单
+       document.myform.reset();
+       
+       return false;
+   }
+</script>
+</html>

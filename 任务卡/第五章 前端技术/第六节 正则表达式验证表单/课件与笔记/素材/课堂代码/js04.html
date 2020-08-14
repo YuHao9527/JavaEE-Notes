@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript中的正则表达式</title>
+</head>
+<body>
+    <h1>JavaScript中的正则表达式在表单验证中的实例</h1>
+    <form action="js03.html" name="myform" onsubmit="return doSubmit()" method="post">
+        账号：<input type="text" name="uname" onblur="checkUname()" /><br/><br/>
+        邮箱：<input type="text" name="email" onblur="checkEmail()"/><br/><br/>
+        <input type="submit" value="提交"/>
+    </form>
+</body>
+<script>
+    //验证账号函数
+    function checkUname(){
+        //获取账号信息
+        var uname = document.myform.uname.value;
+        //执行验证
+        //if(uname.match(/^[0-9A-Za-z_]{8,16}$/) == null){
+        if(uname.match(/^\w{8,16}$/) == null){
+            alert("请输入8~16位的账号信息！");
+            return false;
+        }
+        return true;
+    }
+
+    //验证邮箱函数
+    function checkEmail(){
+        //获取账号信息
+        var email = document.myform.email.value;
+        //执行验证
+        if(email.match(/^\w+@\w+(\.\w+){1,2}$/) == null){
+            alert("请输入正确的Email信息！");
+            return false;
+        }
+        return true;
+    }
+
+    //表单提交
+    function doSubmit(){
+        return checkUname() && checkEmail();
+    }
+</script>
+</html>

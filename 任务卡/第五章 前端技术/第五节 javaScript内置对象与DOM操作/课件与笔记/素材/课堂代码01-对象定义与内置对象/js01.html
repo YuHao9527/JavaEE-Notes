@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        //1.使用原始的方式创建对象
+        var obj = new Object();
+        obj.name = "zhangsan"; //为obj对象添加属性
+        obj.age = 20;
+        obj.say = function(){ //添加功能（函数/方法）
+            console.log(this.name,":",this.age);
+        }
+        //测试
+        console.log(obj.name);
+        console.log(obj.age);
+        obj.say()
+
+        //2.使用工厂模式创建对象
+        function createObject(name,age){
+            var obj = new Object();
+            obj.name = name; //为obj对象添加属性
+            obj.age = age;
+            obj.say = function(){ //添加功能（函数/方法）
+                console.log(this.name,":",this.age);
+            }
+            return obj;
+        }
+        //测试
+        var ob1 = createObject("lisi",20);
+        console.log(ob1.name);
+        ob1.say();
+        var ob2 = createObject("wangwu",25);
+        console.log(ob2.name);
+        ob2.say();
+        console.log("=============================");
+
+        //3.使用自定义构造函数创建对象
+        function Stu(name,age){
+            this.name = name;
+            this.age = age;
+            this.say = function(){
+                console.log(this.name,":",this.age);
+            }
+        }
+        //测试
+        var s1 = new Stu("zhaoliu",28);
+        var s2 = new Stu("xiaoli",21);
+        s1.say()
+        s2.say()
+        console.log("=============================");
+
+        //4.直接创建自定义对象
+        var ob = {name:"qq",age:26};
+        console.log(ob.name);
+        console.log(ob.age);
+
+        var obj={};
+        obj.name="小白";
+        obj.say=function () {
+        console.log("我叫: "+this.name);
+        };
+        obj.say();
+
+        var obj2={
+            name:"小明",
+            age:20,
+            say:function () {
+                console.log("我叫: "+this.name+"; 年龄: "+this.age);
+            },
+        };
+        obj2.say();
+
+        var a = [10,20,30];
+        console.log(a.constructor == Array);
+        console.log(s1 instanceof Stu);
+    </script>
+</head>
+<body>
+    <h1>JavaScript语言实例--对象的定义和使用</h1>
+</body>
+</html>

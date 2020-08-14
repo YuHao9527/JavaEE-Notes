@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript中的XML DOM</title>
+    <style>
+        ul{list-style:none;}
+        ul li{line-height:30px;background-color:#ddd;margin-top:2px;width:100px;}
+    </style>
+</head>
+<body>
+    <h1>XML-DOM：节点的创建</h1>
+    <ul id="uid">
+        <li>成龙</li>
+        <li>甄子丹</li>
+        <li>李连杰</li>
+        <li>宋小宝</li>
+    </ul>
+    名称：<input id="nid" type="text" size="10" name="name"/>
+    <button onclick="doAdd()">添加</button>
+</body>
+<script>
+    function doAdd(){
+        //获取输入框中的信息
+        var name = document.getElementById("nid").value;
+        //获取ul元素节点对象
+        var ul = document.getElementById("uid");
+        //创建一个文本节点
+        var tt = document.createTextNode(name);
+        //创建一个元素节点
+        var li = document.createElement("li"); //<li></li>
+        //将文件节点添加到li元素节点中
+        li.appendChild(tt);
+        //将li节点添加到ul中
+        //ul.appendChild(li); //后追加
+        ul.insertBefore(li,ul.firstChild); //前插入
+    }
+</script>
+</html>

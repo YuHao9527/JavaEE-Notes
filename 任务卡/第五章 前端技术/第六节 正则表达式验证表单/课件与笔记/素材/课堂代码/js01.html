@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript中的正则表达式</title>
+</head>
+<body>
+    <h1>JavaScript中的正则表达式</h1>
+</body>
+<script>
+    //正则的使用
+    var str = "wert45678yuiytrew";
+    //使用正则匹配子串str中的数字
+    console.log(str.match(/[0-9]+/));
+
+    //使用RegExp创建一个正则对象
+    var pat = new RegExp("[0-9]+");
+    console.log(str.match(pat));
+    console.log(pat.exec(str));
+    //以上三个返回结果一致：["45678", index: 4, input: "wert45678yuiytrew", groups: undefined]
+
+    console.log("==============================");
+
+    //正则搜索
+    console.log(str.search(/[0-9]+/)); //4 返回首次匹配位置 ，没有返回-1
+    console.log(str.search(pat)); //4 返回首次匹配位置 ，没有返回-1
+    console.log(pat.test(str)); //true 返回是否匹配
+
+    //匹配多个
+    console.log("==============================");
+    var str = "wert45678yui456ytr678ew";
+
+    console.log(str.match(/[0-9]+/)); //默认只匹配一次
+    console.log(str.match(/[0-9]+/g)); //(3) ["45678", "456", "678"] 使用g修饰符 匹配所有
+
+
+</script>
+</html>

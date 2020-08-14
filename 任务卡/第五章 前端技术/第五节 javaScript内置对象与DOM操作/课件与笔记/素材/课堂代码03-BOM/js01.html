@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript语言</title>
+
+</head>
+<body>
+    <h1>JavaScript中的BOM--window</h1>
+    <iframe src="js02.html" width="500" height="500"></iframe>
+    <button onclick="window.open('js02.html','','width=200,height=100');">打开一个新窗口</button>
+</body>
+<script>
+    //document.write(window.frames.length);
+
+    //window.document.write("hello world!");
+
+    window.alert("ok");
+    b = window.confirm("确定要删除吗？");
+    if(b){
+        alert("yes");
+    }else{
+        alert("no");
+    }
+
+    var mstr = window.prompt("请输入你的邮箱？");
+    alert(mstr);
+</script>
+</html>

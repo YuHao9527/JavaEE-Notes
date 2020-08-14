@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript语言实例</title>
+    <style>
+        ul,li{margin:0px;padding:0px;}
+        ul{list-style:none;}
+        ul li{height:30px;margin-top:4px;background-color:#ddd;}
+        ul li:hover{background-color:#fc0;}
+    </style>
+</head>
+<body>
+    <h1>JavaScript语言实例--dblclick双击事件</h1>
+    <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</body>
+<script>
+   //获取上面所有的li元素节点
+   var mlist = document.getElementsByTagName("li");
+   //遍历绑定事件
+   for(var i=0;i<mlist.length;i++){
+       mlist[i].ondblclick = function(){
+           //设置背景颜色
+           this.style.backgroundColor = "#f0c";
+       }
+   }
+</script>
+</html>

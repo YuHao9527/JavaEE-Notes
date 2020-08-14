@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript语言实例</title>
+</head>
+<body>
+    <h1>JavaScript语言实例--事件处理(事件绑定方式)</h1>
+    <button onclick="fun()">按钮1</button>
+    
+    <button id="bid">按钮2</button>
+</body>
+<script>
+     function fun(){
+         console.log("按钮1被点击了");
+     } 
+
+     document.getElementById("bid").onclick = function(){
+        console.log("按钮2被点击了");
+     }
+</script>
+</html>

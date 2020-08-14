@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>随机点名器</title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0; 
+            padding: 0;
+        }
+        
+        div {
+            width: 500px;
+            height: 300px;
+            background-color: coral;
+            margin: 0 auto;
+            position: relative;
+            top: 50%;
+            margin-top: -150px;
+        }
+
+        div input {
+            font-size: 22;
+            font-weight: 700;
+            text-align: center;
+            width: 200px;
+            height: 50px;
+            background-color: darkgray;
+            margin-top: 100px;
+            margin-left: 150px;
+            border: 0;
+
+        }
+
+        div button {
+            width: 80px;
+            height: 25px;
+            margin-top: 10px;
+            margin-left: 210px;
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <input type="text" name="uname" id="tid" readonly>
+        <button onclick="main(this)">开始</button>
+    </div>
+</body>
+<script>
+    // 姓名数组
+    var names = ["王二","涨三","李四","刘五","赵六","麻子"];
+    // 获取input
+    var tid = document.getElementById("tid");
+    // 定时器
+    var time;
+    // 初始化姓名信息
+    tid.value = names[Math.floor(Math.random() * 6)];
+    // 判断开始还是停止
+    function main(br) {
+        if (br.innerHTML == "停止") {
+            stop(br);
+        }else {
+            start(br);
+        }
+    }
+
+    // 开始方法
+    function start(br) {
+        br.style.backgroundColor = "red";
+        br.innerHTML = "停止";
+        // 循环显示姓名 每隔200ms
+        time = setInterval(show, 200);
+    }
+    
+    // 停止方法
+    function stop(br) {
+        br.style.backgroundColor = "green";
+        br.innerHTML = "开始";
+        // 停止循环计时
+        clearInterval(time);
+        // 弹窗提示选中了谁
+        alert("恭喜" + tid.value)
+    }
+    
+    // 显示姓名
+    function show() {
+        tid.value = names[Math.floor(Math.random() * 6)]
+    }
+</script>
+</html>

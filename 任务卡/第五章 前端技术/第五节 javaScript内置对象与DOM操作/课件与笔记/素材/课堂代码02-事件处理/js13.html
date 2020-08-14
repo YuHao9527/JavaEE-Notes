@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript语言实例</title>
+</head>
+<body>
+    <h1 id="hid">JavaScript语言实例--滚动条事件</h1>
+    <div id="aid" style="height:500px;width:700px;background-color:#ddd;"></div>
+    <div id="bid" style="height:500px;width:700px;background-color:#eee;"></div>
+</body>
+<script>
+    window.onscroll = function(){
+        var scrollTop = 0;
+        if(document.documentElement && document.documentElement.scrollTop){
+            scrollTop = document.documentElement.scrollTop;
+        }else if(document.body){
+            scrollTop = document.body.scrollTop;
+        }
+        document.getElementById("bid").innerHTML = scrollTop;
+    }
+</script>
+</html>

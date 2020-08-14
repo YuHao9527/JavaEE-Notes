@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript语言实例</title>
+    <style>
+        ul,li{margin:0px;padding:0px;}
+        ul{list-style:none;width:100px;text-align:center;position:absolute;display:none;}
+        ul li{height:30px;line-height:30px;margin-top:4px;background-color:#ddd;}
+        ul li:hover{background-color:#fc0;}
+    </style>
+</head>
+<body>
+    <h1>JavaScript语言实例--contextmenu鼠标右击事件</h1>
+    <ul id="uid">
+        <li>剪切</li>
+        <li>复制</li>
+        <li>粘贴</li>
+    </ul>
+</body>
+<script>
+   document.oncontextmenu = function(ent){
+       //获取兼容的事件对象
+       var event = ent || window.event;
+       
+       //获取鼠标在网页中的点击位置
+       var x = event.clientX;
+       var y = event.clientY;
+        console.log(x,y);
+
+        var uid = document.getElementById("uid");
+        uid.style.top = y+"px";
+        uid.style.left = x+"px";
+        uid.style.display = "block";
+       return false;
+   }
+</script>
+</html>

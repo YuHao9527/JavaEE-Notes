@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>正则表达式</title>
+    <style>
+        body {
+            background-color: azure;
+        }
+
+        div {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+
+        form {
+            margin-left: 100px;
+        }
+
+        input:hover {
+            margin-left: 10px;
+            border-color: black;
+        }
+
+        input {
+            margin: 10px;
+        }
+
+        span {
+            margin-left: 10px;
+            font-size: 16px;
+            color: dimgray;
+        }
+
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <form action="success.html" name="myform" method="post" onsubmit="return doSubmit()">
+            <h1>个人信息登记表</h1>
+            登录账号:<input type="text" name="uname"><span>6到18位有效数字（字母、数字、下划线）</span><br>
+            登录密码:<input type="password" name="password"><span>6到18位任意字符</span><br>
+            重复密码:<input type="password" name="password2" onblur="confirmPassword()"><span>重复密码与登录密码一致</span><br>
+            性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别:<input type="radio" name="sex" value="female">女<input type="radio" name="sex" value="male" checked>男<span>必须选择一个</span><br>
+            年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄:<input type="text" name="age"><span>大于零任意两位整数</span><br>
+            手机号码:<input type="text" name="phone"><span>由1开头的11位整数</span><br>
+            邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱:<input type="text" name="email"><span>有效的email地址</span><br>
+            学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历:
+            <select name="education" style="height: 25px;width: 60px;">
+                <option value="博士">博士</option>
+                <option value="研究生">研究生</option>
+                <option value="本科">本科</option>
+                <option value="大专">大专</option>
+                <option value="高中">高中</option>
+            </select>
+            <span>必须选择一个学历</span><br>
+            <input type="submit" value="提交">
+            <input type="reset" value="重置"><br>
+        </form>
+    </div>
+    
+</body>
+<script>
+
+    function checkUname() {
+        var uname = document.myform.uname.value;
+        if (uname.match(/^[0-9a-zA-Z_]{6,18}$/) == null) {
+            alert("你输入的账号格式有误");
+            return false;
+        }
+        return true;
+    }
+
+    function checkPassword() {
+        var password = document.myform.password.value;
+        if (password.match(/^\w{6,18}$/) == null) {
+            alert("你输入的密码格式错误");
+            return false;
+        }
+        return true;
+    }
+
+    function confirmPassword() {
+        var password2 = document.myform.password2.value;
+        var password = document.myform.password.value;
+        if (password2 != password) {
+            alert("你两次输入的密码不一致");
+            return false;
+        }
+        return true;
+    }
+
+    function checkAge() {
+        var age = document.myform.age.value;
+        if (age.match(/^[0-9]{2}$/) == null) {
+            alert("年龄错误");
+            return false;
+        }
+        return true;
+    }
+
+    function checkPhone() {
+        var phone = document.myform.phone.value;
+        if (phone.match(/^1[0-9]{10}$/) == null) {
+            alert("电话输入有误");
+            return false;
+        }
+        return true;
+    }
+
+    function checkEmail(){
+        //获取账号信息
+        var email = document.myform.email.value;
+        //执行验证
+        if(email.match(/^\w+@\w+(\.\w+){1,2}$/) == null){
+            alert("请输入正确的Email信息！");
+            return false;
+        }
+        return true;
+    }
+
+    function doSubmit() {
+        return checkUname() && checkPassword() && confirmPassword() && checkAge() && checkPhone() && checkEmail();
+    }
+</script>
+</html>

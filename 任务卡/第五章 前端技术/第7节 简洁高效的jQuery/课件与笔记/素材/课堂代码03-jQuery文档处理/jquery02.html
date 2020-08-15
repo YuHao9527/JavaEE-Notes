@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery实例</title>
+    <style>
+        ul,li{padding:0px;margin:0px;}
+        ul.uu{list-style:none;}
+        ul.uu li{line-height:40px;padding-left:20px;margin:5px;background-color:#ddd;}
+        ul.uu li:hover{background-color:#fc0;}
+        ul.uu li.active{background-color: #f0c;}
+    </style>
+</head>
+<body>
+    <h1 id="hid">jQuery实例--文档处理--外部插入</h1>
+    <ul class="uu">
+        <li class="active">苹果</li>
+        <li>橘子</li>
+        <li>哈密瓜</li>
+        <li>菠萝</li>
+        <li>芒果</li>
+    </ul>
+    名称：<input type="text" name="tname"/>
+    <button>前添加</button>
+    <button>后追加</button>
+    
+    <script src="./jquery-3.5.0.min.js"></script>
+    <script>
+        //jquery入口
+        $(function(){
+            //获取所有的li节点并绑定点击事件
+            $("ul.uu li").click(function(){
+                $("ul.uu li").removeClass("active");
+                $(this).addClass("active");
+            });
+            //获取所有按钮并绑定点击事件
+            $("button").click(function(){
+                //获取输入框中的内容
+                var tname = $("input[name='tname']").val();
+                //获取按钮上的文本并判断执行对应操作
+                switch($(this).html()){
+                    case "前添加":
+                        //$("li.active").before("<li>"+tname+"</li>");
+                        $("<li>"+tname+"</li>").insertBefore("li.active");
+                        break;
+                    case "后追加":
+                        //$("li.active").after("<li>"+tname+"</li>");
+                        $("<li>"+tname+"</li>")
+                            .insertAfter("li.active")
+                            .click(function(){
+                                $("ul.uu li").removeClass("active");
+                                $(this).addClass("active");
+                            });
+                        break;
+                }
+            });
+        });
+       
+    </script>
+</body>
+</html>

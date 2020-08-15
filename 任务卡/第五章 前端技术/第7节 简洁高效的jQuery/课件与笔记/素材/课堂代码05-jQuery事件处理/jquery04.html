@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery实例</title>
+    <style>
+        div{margin:0px;padding:0px;}
+        #did{width:200px;height:200px;background-color:#ddd;cursor:move;position:absolute;}
+    </style>
+</head>
+<body>
+    <h1 id="hid">jQuery实例--拖动效果</h1>
+    <div id="did"></div>
+    
+    <script src="./jquery-3.5.0.min.js"></script>
+    <script>
+        //jquery入口
+        $(function(){
+            //获取拖动div层并绑定鼠标按下和抬起事件
+            $("#did").mousedown(function(e){
+                //设置背景颜色
+                $(this).css("background-color","blue");
+                //获取当前div层位置
+                var offset = $(this).offset();
+                //计算鼠标按在div层上的位置
+                var x = e.pageX - offset.left;
+                var y = e.pageY - offset.top;
+                //绑定鼠标移动事件
+                $(document).on("mousemove",function(en){
+                    //定位div图层位置
+                    $("#did").css({top:en.pageY-y+"px",left:en.pageX-x+"px"});
+                });
+
+            }).mouseup(function(){  
+                $(this).css("background-color","#ddd");
+                //取消鼠标移动事件
+                $(document).off("mousemove");
+            });
+        }); 
+    </script>
+</body>
+</html>

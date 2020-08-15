@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery实例</title>
+</head>
+<body>
+    <h1 id="hid">jQuery实例--表单中选择器</h1>
+    <ul>
+        <li><input type="checkbox" name="likes[]" value="1"/> aaaaaaa</li>
+        <li><input type="checkbox" name="likes[]" value="2"/> bbbbbbb</li>
+        <li><input type="checkbox" name="likes[]" value="3"/> ccccccc</li>
+        <li><input type="checkbox" name="likes[]" value="4"/> ddddddd</li>
+        <li><input type="checkbox" name="likes[]" value="5"/> eeeeeee</li>
+    </ul>
+   <button onclick="doFun()">获取</button>
+
+    <script src="./jquery-3.5.0.min.js"></script>
+    <script>
+        function doFun(){
+            //获取所有多选框中选择中的元素节点
+            //var list = $("input[type='checkbox']:checked");
+            var list = $(":checkbox:checked");
+            alert(list.length);
+            
+            //获取li元素节点（条件是里面的多选框必须选中），并设置样式
+            $("li:has(input:checked)").css("color","red");
+        }
+       
+    </script>
+</body>
+</html>

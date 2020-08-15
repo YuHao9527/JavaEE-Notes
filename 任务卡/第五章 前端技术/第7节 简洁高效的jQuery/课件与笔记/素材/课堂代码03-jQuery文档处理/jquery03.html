@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery实例</title>
+</head>
+<body>
+    <h1 id="hid">jQuery实例--文档处理--外部插入和删除</h1>
+    <form>
+        姓名：<input type="text" title="姓名" name="uname"/><br/><br/>
+        年龄：<input type="text" title="年龄" name="age"/><br/><br/>
+        邮箱：<input type="text" title="邮箱" name="email"/><br/><br/>
+        电话：<input type="text" title="电话" name="phone"/><br/><br/>
+        地址：<input type="text" title="地址" name="address"/><br/><br/>
+    </form>
+    <br/><br/>
+
+    <script src="./jquery-3.5.0.min.js"></script>
+    <script>
+        //jquery入口
+        $(function(){
+            //获取所有的输入框并绑定获得和失去焦点事件
+            $("input:text").focus(function(){
+                //获得焦点事件处理
+                var title = $(this).attr("title");
+                $("<span> 请输入正确的"+title+"信息</span>").insertAfter(this).css("color","#ddd");
+            }).blur(function(){
+                //失去焦点事件处理
+                $(this).next("span").remove();
+            });
+
+        });
+       
+    </script>
+</body>
+</html>

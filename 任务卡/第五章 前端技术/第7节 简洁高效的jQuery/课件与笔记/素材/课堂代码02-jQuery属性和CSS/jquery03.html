@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery实例</title>
+</head>
+<body>
+    <h1 id="hid">jQuery实例--jQuery属性--HTML代码/文本/值的操作</h1>
+    <ul>
+        <li class="c1"><a href="http://www.baidu.com">百度</a></li>
+        <li class="c2"><a href="http://www.163.com">网易</a></li>
+        <li class="c3"><a href="http://www.qq.com">腾讯</a></li>
+        <li class="c4"><a href="http://www.sina.com">新浪</a></li>
+    </ul>
+    搜索：<input type="text" name="kw" value="html"/> <button>搜索</button>
+    <br/><br/>
+
+    <script src="./jquery-3.5.0.min.js"></script>
+    <script>
+        //jquery入口
+        $(function(){
+            console.log($("li.c1").html()); //类似于js中的innerHTML
+            console.log($("li.c2").text());
+            $("li.c3").html('<a href="http://www.qq.com">腾讯2</a>');
+            $("li.c4").text('<a>新浪2</a>');
+
+            console.log($("input[name='kw']").val());
+            $("input[name='kw']").val('CSS样式');
+
+        });
+       
+    </script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery实例</title>
+    <style>
+        div,ul,li,a{margin:0px;padding:0px;}
+        ul{list-style:none; position:absolute;}
+        a{text-decoration:none;display:block;width:100px;line-height:40px;}
+        a:hover{background-color:#fc0;}
+        #menu{width:100%;height:40px;line-height:40px;}
+        #menu ul li{width:100px;float:left;
+                    line-height:40px;
+                    background-color:#ddd;
+                    text-align:center;
+                    border-right:2px solid #fff;}
+        #menu ul li ul.item li{border-top:2px solid #fff;}
+        #menu ul li ul.item{display:none;position:relative;}
+    </style>
+</head>
+<body>
+    <h1 id="hid">jQuery实例--jQuery效果展示--导航栏效果</h1>
+    <div id="menu">
+        <ul>
+            <li><a href="#">商品展示</a>
+                <ul class="item">
+                    <li><a href="#">热卖商品</a></li>
+                    <li><a href="#">最新商品</a></li>
+                    <li><a href="#">特价商品</a></li>
+                    <li><a href="#">推荐商品</a></li>
+                </ul>
+            </li>
+            <li><a href="#">站内新闻</a>
+                <ul class="item">
+                    <li><a href="#">国内新闻</a></li>
+                    <li><a href="#">体育信息</a></li>
+                    <li><a href="#">热点新闻</a></li>
+                </ul>
+            </li>
+            <li><a href="#">网站公告</a>
+                <ul class="item">
+                    <li><a href="#">国内新闻</a></li>
+                    <li><a href="#">体育信息</a></li>
+                    <li><a href="#">热点新闻</a></li>
+                    <li><a href="#">体育信息</a></li>
+                    <li><a href="#">热点新闻</a></li>
+                </ul>
+            </li>
+            <li><a href="#">关于我们</a>
+                <ul class="item">
+                    <li><a href="#">国内新闻</a></li>
+                    <li><a href="#">体育信息</a></li>
+                    <li><a href="#">热点新闻</a></li>
+                </ul>
+            </li>
+            <li><a href="#">在线帮助</a></li>
+        </ul>
+    </div>
+    
+    <script src="./jquery-3.5.0.min.js"></script>
+    <script>
+        //jquery入口
+        $(function(){
+            //获取所有菜单中li选项，并绑定鼠标移入和移出事件
+            $("#menu ul li").mouseover(function(){
+                //移入事件处理
+                //$(this).find("ul.item").show();
+                $("ul.item:animated").stop().hide();
+                $(this).find("ul.item").slideDown("slow");
+            }).mouseout(function(){
+                //移出事件处理
+                $(this).find("ul.item").hide();
+            });
+        });
+       
+    </script>
+</body>
+</html>

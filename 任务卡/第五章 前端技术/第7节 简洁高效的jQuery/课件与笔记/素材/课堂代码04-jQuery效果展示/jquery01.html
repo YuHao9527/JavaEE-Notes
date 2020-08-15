@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery实例</title>
+</head>
+<body>
+    <h1 id="hid">jQuery实例--jQuery特效展示</h1>
+    <button>显示</button>
+    <button>隐藏</button>
+    <button>切换</button><br/><br/>
+    <img src="./images/33.jpg" width="300"/>
+    
+    <script src="./jquery-3.5.0.min.js"></script>
+    <script>
+        //jquery入口
+        $(function(){
+           //获取按钮并绑定点击事件
+           $("button").click(function(){
+               //判断按钮上的文本并执行对应的操作
+               switch($(this).html()){
+                    case "显示":
+                        //$("img").show("slow");
+                        //$("img").slideDown("slow");
+                        $("img").fadeIn("slow");
+                        break;
+                    case "隐藏":
+                        //$("img").hide("slow");
+                        //$("img").slideUp("slow");
+                        $("img").fadeOut("slow");
+                        break;
+                    case "切换":
+                        //$("img").toggle("slow");
+                        //$("img").slideToggle("slow");
+                        //$("img").fadeToggle("slow");
+                        $("img").stop().toggle("slow");
+                        break;
+
+               }
+           });
+        });
+    </script>
+</body>
+</html>

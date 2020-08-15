@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery实例</title>
+</head>
+<body>
+    <h1 id="hid">jQuery实例--基本筛选器</h1>
+    <ul>
+        <li>aaaaaa</li>
+        <li class="cc">bbbbbb</li>
+        <li>cccccc</li>
+        <li class="cc">ddddd</li>
+        <li>eeeee</li>
+        <li>ffffff</li>
+    </ul>
+
+    <script src="./jquery-3.5.0.min.js"></script>
+    <script>
+        //jquery入口
+        $(function(){
+            //获取所有li节点并设置样式
+            //$("li").css("color","red");
+
+            //获取第一个li节点并设置样式
+            //$("li:first").css("color","red");
+
+            //获取最后一个li节点并设置样式
+            //$("li:last").css("color","red");
+
+            //获取偶数索引号对应的所有li节点并设置样式
+            //$("li:even").css("color","red");
+
+            //获取奇数索引号对应的所有li节点并设置样式
+            //$("li:odd").css("color","red");
+
+            //获取class属性值为cc的所有li节点并设置样式
+            //$("li.cc").css("color","red");
+
+            //获取class属性值不为cc的所有li节点并设置样式
+            //$("li:not(.cc)").css("color","red");
+
+            //获取索引位置为2的li节点并设置样式
+            //$("li:eq(2)").css("color","red");
+
+            //获取前2个li节点并设置样式
+            //$("li:lt(2)").css("color","red");
+
+            //获取所有li节点并添加鼠标移入和移出事件
+            $("li").mouseover(function(){
+                $(this).animate({paddingLeft:"+=20"},800);
+            }).mouseout(function(){
+                $(this).animate({paddingLeft:"-=20"},500);
+            });
+        });
+       
+    </script>
+</body>
+</html>

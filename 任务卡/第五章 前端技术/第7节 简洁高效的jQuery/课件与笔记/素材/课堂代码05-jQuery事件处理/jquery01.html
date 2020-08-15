@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery实例</title>
+</head>
+<body>
+    <h1 id="hid">jQuery实例--事件处理</h1>
+    <button onclick="dofun()">点击我</button>
+    <button id="bid">投票</button>
+
+    <script src="./jquery-3.5.0.min.js"></script>
+    <script>
+        //jquery入口
+        $(function(){
+           //获取投票按钮并绑定一次性点击事件
+           $("#bid").one("click",function(){
+               alert("投票成功！");
+               $(this).html("已投票");
+           });
+        });
+
+        function dofun(){
+            console.log("事件被点击！");
+            $("#hid").css("color","red");
+            //使用jquery程序激发一个事件
+            $("#bid").trigger("click");
+        }
+    </script>
+</body>
+</html>

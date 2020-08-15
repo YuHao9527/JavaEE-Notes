@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery实例</title>
+</head>
+<body>
+    <h1 id="hid">jQuery实例--层级选择器</h1>
+    <ul>
+        <li>aaaaaa</li>
+        <li>bbbbbb</li>
+        <li>cccccc</li>
+        <ol>
+            <li>ddddd</li>
+            <li>ddddd</li>
+            <li>ddddd</li>
+        </ol>
+    </ul>
+    <li>ccccc</li>
+    <li>ddddd</li>
+    <li>eeeee</li>
+
+    <script src="./jquery-3.5.0.min.js"></script>
+    <script>
+        //jquery入口
+        $(function(){
+            //获取ul中所有子元素节点li（包括后代节点），并设置样式
+            //$("ul li").css("color","red"); 
+            
+            //获取ul中所有直接子元素节点li（包括后代节点），并设置样式
+            //$("ul>li").css("color","red");
+
+            //获取ul同级紧邻后面的第一个兄弟节点li，并设置样式
+            //$("ul+li").css("color","red");
+
+            //获取ul后面所有同级兄弟li元素节点，并设置样式
+            $("ul~li").css("color","red");
+        });
+       
+    </script>
+</body>
+</html>

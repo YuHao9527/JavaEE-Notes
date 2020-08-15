@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery实例</title>
+    <style>
+        div,img,ul,li{margin:0px;padding:0px;}
+        #did{width:384px;height:240px;}
+        #list img{width:85px;border:2px solid #fff;margin-right:2px;}
+        #list img:hover{border:2px solid red;}
+    </style>
+</head>
+<body>
+    <h1 id="hid">jQuery实例--鼠标移入事件处理</h1>
+    <div id="did">
+        <img id="mid" src="./images/11.jpg" width="384"/>
+    </div>
+    <div id="list">
+        <img src="./images/11.jpg"/>
+        <img src="./images/22.jpg"/>
+        <img src="./images/33.jpg"/>
+        <img src="./images/44.jpg"/>
+    </div>
+    
+    <script src="./jquery-3.5.0.min.js"></script>
+    <script>
+        //jquery入口
+        $(function(){
+            //获取did层并绑定鼠标的移入和移出事件
+            /*
+            $("#did").mouseover(function(){
+                console.log("鼠标移入。。。。");
+            }).mouseout(function(){
+                console.log("鼠标移出。。。。");
+            });
+            */
+            //效果同上的代码
+            /*
+            $("#did").hover(function(){
+                //鼠标移入事件处理
+                console.log("鼠标移入111。。。。");
+            },function(){
+                //鼠标移出事件处理
+                console.log("鼠标移出11。。。。");
+            });
+            */
+
+            //获取图片列表并绑定鼠标移入事件
+            $("#list img").mouseover(function(){
+                $("#mid").attr("src",$(this).attr("src"));
+            });
+        });
+    </script>
+</body>
+</html>

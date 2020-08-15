@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery实例</title>
+    <style>
+        ul,li{padding:0px;margin:0px;}
+        ul.uu{list-style:none;}
+        ul.uu li{line-height:40px;padding-left:20px;margin:5px;background-color:#ddd;}
+        ul.uu li:hover{background-color:#fc0;}
+        ul.uu li.active{background-color: #f0c;}
+    </style>
+</head>
+<body>
+    <h1 id="hid">jQuery实例--jQuery属性--class类操作</h1>
+    <ul class="uu">
+        <li>苹果</li>
+        <li>橘子</li>
+        <li>哈密瓜</li>
+        <li>菠萝</li>
+        <li>芒果</li>
+    </ul>
+    
+    <script src="./jquery-3.5.0.min.js"></script>
+    <script>
+        //jquery入口
+        $(function(){
+            //获取上面所有的li节点并添加点击事件
+            $("ul.uu li").click(function(){
+                //切换class类属性
+                $(this).toggleClass("active");
+                /*
+                //判断当前节点li是否含有active class属性
+                if($(this).hasClass('active')){
+                    //删除class类属性
+                    $(this).removeClass("active");
+                }else{
+                    //添加class类属性
+                    $(this).addClass("active");
+                }
+                */
+            });
+        });
+       
+    </script>
+</body>
+</html>

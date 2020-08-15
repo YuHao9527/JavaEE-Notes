@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery实例</title>
+</head>
+<body>
+    <h1 id="hid">jQuery实例--节点遍历操作</h1>
+    <ul>
+        <li>2</li>
+        <li>1</li>
+        <li>10</li>
+        <li>18</li>
+        <li>8</li>
+    </ul>
+    <button>乘以2</button>
+
+    <script src="./jquery-3.5.0.min.js"></script>
+    <script>
+        //jquery入口
+        $(function(){
+           $("button").click(function(){
+               //$("li").css("color","red");
+               //获取li节点并遍历执行操作
+               $("li").each(function(i){
+                    //alert(i); //索引位置
+                    $(this).html($(this).html()*2);
+               });
+           });
+
+           /*
+           //统一绑定点击事件
+           $("li").click(function(){
+               alert($(this).html());
+           });
+           */
+        });
+    </script>
+</body>
+</html>

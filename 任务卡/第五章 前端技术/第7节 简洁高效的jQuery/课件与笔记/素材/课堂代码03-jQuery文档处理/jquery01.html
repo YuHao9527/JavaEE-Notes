@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery实例</title>
+</head>
+<body>
+    <h1 id="hid">jQuery实例--文档处理--内部插入</h1>
+    <ul class="uu">
+        <li>苹果</li>
+        <li>橘子</li>
+        <li>哈密瓜</li>
+    </ul>
+    名称：<input type="text" name="tname"/>
+    <button>前添加</button>
+    <button>后追加</button>
+    
+    <script src="./jquery-3.5.0.min.js"></script>
+    <script>
+        //jquery入口
+        $(function(){
+            //获取按钮并绑定点击事件
+            $("button").click(function(){
+                //获取输入框中的内容
+                var tname = $("input[name='tname']").val();
+                //获取上的内容判断执行对应的操作
+                switch($(this).html()){
+                    case "前添加":
+                        //$("ul.uu").prepend("<li>"+tname+"</li>");
+                        $("<li>"+tname+"</li>").prependTo("ul.uu");
+                        break;
+                    case "后追加":
+                        //$("ul.uu").append("<li>"+tname+"</li>");
+                        $("<li>"+tname+"</li>").appendTo("ul.uu");
+                        break;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery实例</title>
+</head>
+<body>
+    <h1 id="hid">jQuery实例--属性选择器</h1>
+    <form>
+        姓名：<input type="text" name="uname" value="zhangsan"/><br/><br/>
+        年龄：<input type="text" name="age"/><br/><br/>
+        邮箱：<input type="text" name="email"/><br/><br/>
+        电话：<input type="text" name="phone"/><br/><br/>
+        地址：<input type="text" name="address"/><br/><br/>
+    </form>
+
+    <script src="./jquery-3.5.0.min.js"></script>
+    <script>
+        //jquery入口
+        $(function(){
+            //获取所有含有value属性的input元素标签，并设置样式
+            //$("input[value]").css("border","1px solid red");
+
+            //获取name属性值为phone的input元素标签，并设置样式
+            //$("input[name='phone']").css("border","1px solid red");
+
+            //获取name属性值不为phone的input元素标签，并设置样式
+            //$("input[name!='phone']").css("border","1px solid red");
+
+            //获取name属性值是以a字符开头的所有input元素标签，并设置样式
+            //$("input[name^='a']").css("border","1px solid red");
+
+            //获取name属性值是以e字符结尾的所有input元素标签，并设置样式
+            //$("input[name$='e']").css("border","1px solid red");
+
+            //获取name属性值中含有m字符的所有input元素标签，并设置样式
+            $("input[name*='m']").css("border","1px solid red");
+        });
+       
+    </script>
+</body>
+</html>

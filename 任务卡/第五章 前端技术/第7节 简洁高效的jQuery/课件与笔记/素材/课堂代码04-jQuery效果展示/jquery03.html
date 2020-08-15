@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery实例</title>
+    <style>
+        ul.uu{display:none;}
+        h4{line-height:40px;}
+        h4:hover{background-color:#ddd;}
+    </style>
+</head>
+<body>
+    <h1 id="hid">jQuery实例--jQuery效果展示--树形菜单</h1>
+    <h4>水果系列</h4>
+    <ul class="uu">
+        <li>苹果</li>
+        <li>橘子</li>
+        <li>哈密瓜</li>
+    </ul>
+    <h4>水果系列</h4>
+    <ul class="uu">
+        <li>苹果</li>
+        <li>橘子</li>
+        <li>哈密瓜</li>
+    </ul>
+    <h4>水果系列</h4>
+    <ul class="uu">
+        <li>苹果</li>
+        <li>橘子</li>
+        <li>哈密瓜</li>
+    </ul>
+    <br/><br/>
+
+    <script src="./jquery-3.5.0.min.js"></script>
+    <script>
+        //jquery入口
+        $(function(){
+            //获取上面所有的h4标题并绑定点击事件
+            $("h4").click(function(){
+                //获取当前h4紧邻的兄弟ul节点，并滑动展开显示
+                $(this).next("ul.uu").slideToggle("slow")
+            });
+        });
+       
+    </script>
+</body>
+</html>

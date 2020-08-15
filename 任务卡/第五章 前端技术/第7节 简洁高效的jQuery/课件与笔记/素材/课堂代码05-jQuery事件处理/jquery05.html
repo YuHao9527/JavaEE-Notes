@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery实例</title>
+    <style>
+        #outer{width:400px;height:400px;background-color: #ddd;margin:50px;padding:20px;}
+        #inner{width:200px;height:200px;background-color:#fc0;}
+    </style>
+</head>
+<body>
+    <h1 id="hid">jQuery实例--阻止事件冒泡</h1>
+    <div id="outer">
+       <div id="inner"></div>
+    </div>
+    
+    <script src="./jquery-3.5.0.min.js"></script>
+    <script>
+        //jquery入口
+        $(function(){
+            //获取div层并绑定点击事件
+            $("#outer").click(function(){
+                console.log("outer.....");
+            });
+            $("#inner").click(function(e){
+                console.log("inner.....");
+                //阻止事件冒泡（传播）
+                e.stopPropagation();
+            });
+        });
+       
+    </script>
+</body>
+</html>

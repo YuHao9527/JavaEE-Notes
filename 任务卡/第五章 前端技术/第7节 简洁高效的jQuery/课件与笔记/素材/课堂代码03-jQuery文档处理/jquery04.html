@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery实例</title>
+    <style>
+        ul,li{padding:0px;margin:0px;}
+        ul.uu{list-style:none;}
+        ul.uu li{line-height:40px;padding-left:20px;margin:5px;background-color:#ddd;}
+        ul.uu li:hover{background-color:#fc0;}
+        ul.uu li.active{background-color: #f0c;}
+    </style>
+</head>
+<body>
+    <h1 id="hid">jQuery实例--文档处理--删除操作</h1>
+    <ul class="uu">
+        <li>苹果</li>
+        <li>橘子</li>
+        <li>哈密瓜</li>
+        <li>菠萝</li>
+        <li>芒果</li>
+    </ul>
+    <button>删除</button>
+    <button>清空</button>
+    
+    <script src="./jquery-3.5.0.min.js"></script>
+    <script>
+        //jquery入口
+        $(function(){
+            //获取li节点并添加选中效果
+            $("ul.uu li").click(function(){
+                $(this).toggleClass("active");
+            });
+            //获取按钮并绑定点击事件
+            $("button").click(function(){
+                //根据按钮上的文本执行对象操作
+                switch($(this).html()){
+                    case "删除":
+                        $("li.active").remove();
+                        break;
+                    case "清空":
+                        $("ul.uu").empty();
+                        break;
+                }
+            });
+        });
+       
+    </script>
+</body>
+</html>

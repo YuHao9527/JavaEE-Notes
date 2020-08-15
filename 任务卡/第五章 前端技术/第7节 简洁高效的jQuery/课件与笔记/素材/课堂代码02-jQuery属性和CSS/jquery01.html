@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery实例</title>
+</head>
+<body>
+    <h1 id="hid">jQuery实例--jQuery属性操作</h1>
+    
+    <a id="aid" href="http://www.baidu.com" title="百度链接">百度</a><br/><br/>
+
+    <button onclick="dofun()">更改链接属性</button>
+    
+    <script src="./jquery-3.5.0.min.js"></script>
+    <script>
+        function dofun(){
+            var a = $("#aid");
+            console.log(a.attr("href")); //获取
+            console.log(a.prop("href")); //获取
+            console.log(a.attr("title"));
+            console.log(a.prop("title"));
+            a.attr("href","http://news.baidu.com"); //添加或更改
+            a.removeAttr("title"); //删除属性
+            //a.attr("aa","bb"); //添加属性
+            // a.prop("aa","bb"); //添加属性 prop方法不可以添加不能存在的属性
+            a.prop("title","百度新闻"); //只支持HTML DOM的属性操作
+           
+        }
+       
+    </script>
+</body>
+</html>

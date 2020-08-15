@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery实例</title>
+    <script src="./jquery-3.5.0.min.js"></script>
+    <script>
+        //jQuery的简洁入口
+        $(function(){
+            $("h1").css("color","green");
+            //获取id属性值为bid的按钮并绑定点击事件。
+            $("#bid").click(function(){
+                alert("ok");
+            });
+        });
+        /*
+        //jQuery的标准入口
+        $(document).ready(function(){
+            //获取h1标签，并设置css样式
+            $("h1").css("color","blue");
+        });
+        /*
+        //当前页面加载完成后执行
+        window.onload = function(){
+            //使用jquery编写js程序
+            //获取h1标签，并设置css样式
+            $("h1").css("color","red");
+            //获取id属性值为bid的按钮并绑定点击事件。
+            $("#bid").click(function(){
+                alert("ok");
+            });
+        }
+        */
+    </script>
+</head>
+<body>
+    <h1>jQuery实例--基本使用</h1>
+    <button id="bid">点击我</button>
+</body>
+</html>

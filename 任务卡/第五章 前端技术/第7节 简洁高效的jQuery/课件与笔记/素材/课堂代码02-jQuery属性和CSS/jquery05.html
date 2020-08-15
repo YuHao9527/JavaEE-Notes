@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery实例</title>
+    <style>
+        *{padding:0px;margin:0px;}
+        #outer{background-color:#ddd;width:400px;height:400px;margin:50px;padding:20px;position:relative;}
+        #inner{background-color:#fc0;width:200px;height:200px;position:absolute;}
+    </style>
+</head>
+<body>
+    <h1 id="hid">jQuery实例--jQuery中的CSS样式操作</h1>
+    <div id="outer">
+        <div id="inner"></div>
+    </div>
+
+    <script src="./jquery-3.5.0.min.js"></script>
+    <script>
+        //jquery入口
+        $(function(){
+            //获取标题并设置css样式
+            //$("#hid").css("color","red"); //单个属性设置
+            $("#hid").css({"color":"green","background-color":"#ddd"});
+            console.log($("#hid").css("color")); //获取css属性
+
+            //获取div层的位置
+            var offset = $("#inner").offset();
+            console.log(offset.left,offset.top);
+
+            //获取偏移位置
+            var position = $("#inner").position();
+            console.log(position.left,position.top);
+
+            //获取尺寸
+            console.log($("#inner").width(),$("#inner").height());
+            $("#inner").width(300)
+        });
+       
+    </script>
+</body>
+</html>

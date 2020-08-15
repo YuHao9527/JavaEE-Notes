@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery实例</title>
+</head>
+<body>
+    <h1 id="hid">jQuery实例--子元素选择器</h1>
+    <ul>
+        <li>aaaaaaa</li>
+        <li>bbbbbbb</li>
+        <li>ccccccc</li>
+        <li>ddddddd</li>
+        <li>eeeeeee</li>
+    </ul>
+    <ul>
+        <li>1111111</li>
+        <li>2222222</li>
+        <li>3333333</li>
+        <li>4444444</li>
+        <li>5555555</li>
+    </ul>
+
+    <script src="./jquery-3.5.0.min.js"></script>
+    <script>
+        //jquery入口
+        $(function(){
+            //获取每组ul中的第一个li节点并添加样式
+            //$("ul li:first-child").css("color","red");
+
+            //获取每组ul中的最后一个li节点并添加样式
+            //$("ul li:last-child").css("color","red");
+
+            //获取每组ul中的第三个li节点并添加样式
+            $("ul li:nth-child(3)").css("color","red");
+        });
+       
+    </script>
+</body>
+</html>

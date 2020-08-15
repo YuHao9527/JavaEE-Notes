@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery实例</title>
+</head>
+<body>
+    <h1 id="hid">jQuery实例--基本选择器</h1>
+    <ul>
+        <li>aaa</li>
+        <li class="cc">bbb</li>
+        <li>ccc</li>
+    </ul>
+    <h2>aaaaaaaaaa</h2>
+    <ol>
+        <li class="cc">dddd</li>
+        <li>eeee</li>
+    </ol>
+    <script src="./jquery-3.5.0.min.js"></script>
+    <script>
+        //jquery入口
+        $(function(){
+            // document.getElementById("hid"); //获取id值为hid元素节点
+            //等价于上面语句,获取id值为hid元素节点，并设置css样式
+            $("#hid").css("color","blue");
+
+            //document.getElementsByTagName("li"); //获取网页中所有li元素节点
+            //获取网页中所有li元素节点，并设置css样式
+            //$("li").css("color","red");
+            
+            //获取class属性值为cc所有元素节点，并设置css样式
+            $(".cc").css("color","red");
+
+            //选择器组，统一设置指定css样式
+            $("h1,h2,h3,h4,h5,h6").css("background-color","#ddd");
+        });
+       
+    </script>
+</body>
+</html>

@@ -23,7 +23,8 @@
         }
 
         div input {
-            font-size: 22;
+            font: 微软雅黑;
+            font-size: 22px;
             font-weight: 700;
             text-align: center;
             width: 200px;
@@ -52,13 +53,13 @@
 </body>
 <script>
     // 姓名数组
-    var names = ["王二","涨三","李四","刘五","赵六","麻子"];
+    var names = ["于昊","郑宇豪","旭东","刘一帆","韦斯元","高峰","何学建","刘溪","王军","黄诗宇","肖旭杨"];
     // 获取input
     var tid = document.getElementById("tid");
     // 定时器
     var time;
     // 初始化姓名信息
-    tid.value = names[Math.floor(Math.random() * 6)];
+    tid.value = names[Math.floor(Math.random() * 11)];
     // 判断开始还是停止
     function main(br) {
         if (br.innerHTML == "停止") {
@@ -88,7 +89,8 @@
     
     // 显示姓名
     function show() {
-        tid.value = names[Math.floor(Math.random() * 6)]
+        tid.value = names[Math.floor(Math.random() * 11)]
     }
+
 </script>
 </html>

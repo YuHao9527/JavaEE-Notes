@@ -117,3 +117,15 @@ TheardLocal用途场景？
 2. Iterator对集合只能是前向遍历，ListIterator既可以前向也可以后向。 
 3. ListIterator实现了Iterator接口，并包含其他的功能，比如：增加元素，替换元素，获取前一个和后一个元素的索引
 
+
+## 关于Float下面说法错误的是？
+
+- Float是一个类
+- Float在java.lang包中
+- Float a = 1.0是正确的赋值方法（错误）
+- Float a = new Float(1.0)是正确的赋值方法
+
+Float = new Float(1.0); 这个的东西能存在，是因为Float类中有形参是float和double的两个构造器。
+DoubIe d = new Double(1.0F) ； 这个能成立的原因是float 向上转型了。
+FIoat a = 1.0 ； 这个东西不成立是因为浮点型的默认类型是double，而double不会自动转成float,然后再装箱。
+Double d = 1.0f ；不成立的原因是因为Double类中的装箱方法，只有vaIueOf(String s) 和valueOf(double d) ；装箱本身可不会自动向上转型

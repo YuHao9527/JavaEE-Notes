@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .obox {
+            width: 600px;
+            height: 200px;
+            border: 1px solid #222;
+            display: flex;
+        }
+
+        .obox>div {
+            flex: 1;
+            background: blue;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .oimg {
+            width: 50px;
+            height: 50px;
+            background: pink;
+            border-radius: 50%;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="obox">
+        <div class="oson">
+            <span class="oimg"></span>
+            <span class="info">大娃</span>
+        </div>
+        <div class="oson">
+            <span class="oimg"></span>
+            <span class="info">二娃</span>
+        </div>
+        <div class="oson">
+            <span class="oimg"></span>
+            <span class="info">三娃</span>
+        </div>
+    </div>
+</body>
+
+</html>

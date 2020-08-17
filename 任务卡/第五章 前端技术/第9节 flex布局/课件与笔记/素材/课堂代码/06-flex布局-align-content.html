@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .obox {
+            width: 600px;
+            height: 600px;
+            border: 1px solid #222;
+            /* 容器 */
+            display: flex;
+            flex-wrap: wrap;
+            /* align-content 侧轴上多行情况排列方式 */
+            /* 多行对齐 */
+            /* align-content: flex-start; */
+            /* 从下面对齐 */
+            /* align-content: flex-end; */
+            /* 中间对齐 */
+            /* align-content: center; */
+            /* 平均分 */
+            /* align-content: space-around; */
+            /* 先两边 后中间平均分 */
+            /* align-content: space-between; */
+            /* 侧轴平均分多行 */
+            align-content: stretch;
+        }
+
+        .os {
+            width: 200px;
+            /* height: 200px; */
+            background: red;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="obox">
+        <div class="os">1</div>
+        <div class="os">2</div>
+        <div class="os">3</div>
+        <div class="os">4</div>
+    </div>
+</body>
+
+</html>

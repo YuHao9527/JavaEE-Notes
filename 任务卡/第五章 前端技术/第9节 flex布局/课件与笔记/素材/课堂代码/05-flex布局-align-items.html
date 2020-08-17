@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .obox {
+            width: 600px;
+            height: 600px;
+            border: 1px solid #222;
+            /* 容器 */
+            display: flex;
+            /* align-item 单行 在y轴的对齐方式 */
+            /* 默认的是flex-start 从上到下 */
+            align-items: flex-start;
+            /* 从下到上 */
+            /* 从下到上 */
+            align-items: flex-end;
+            /* 居中 */
+            align-items: center;
+            /* 拉伸 */
+            align-items: stretch;
+        }
+
+        .os {
+            width: 100px;
+            /* height: 100px; */
+            background: red;
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="obox">
+        <div class="os">1</div>
+        <div class="os">2</div>
+        <div class="os">3</div>
+        <div class="os">4</div>
+    </div>
+</body>
+
+</html>

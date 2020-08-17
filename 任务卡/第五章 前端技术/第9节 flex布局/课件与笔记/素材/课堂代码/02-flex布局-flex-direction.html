@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .obox {
+            width: 800px;
+            height: 600px;
+            border: 1px solid #222;
+            /* 容器 */
+            display: flex;
+            /* flex-direction 让元素按照主轴的方向进行排列 */
+            /* 默认是row 从左到右 */
+            /* flex-direction: row; */
+            /* 从右到左 */
+            /* flex-direction: row-reverse; */
+            /* 从上到下 */
+            /* flex-direction: column; */
+            /* 从下到上 */
+            flex-direction: column-reverse;
+
+        }
+
+        .os {
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="obox">
+        <div class="os">1</div>
+        <div class="os">2</div>
+        <div class="os">3</div>
+        <div class="os">4</div>
+    </div>
+</body>
+
+</html>

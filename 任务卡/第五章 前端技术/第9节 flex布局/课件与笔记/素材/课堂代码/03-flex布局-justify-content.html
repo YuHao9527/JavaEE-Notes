@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .obox {
+            width: 800px;
+            height: 600px;
+            border: 1px solid #222;
+            /* 容器 */
+            display: flex;
+            /* justify-content 控制元素在主轴上对齐的方式 */
+            justify-content: flex-start;
+            /* 尾部对齐 */
+            justify-content: flex-end;
+            /* 居中对齐 */
+            justify-content: center;
+            /* 平分剩余空间 */
+            justify-content: space-around;
+            /* 先两边在平分剩余空间 */
+            justify-content: space-between;
+        }
+
+        .os {
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="obox">
+        <div class="os">1</div>
+        <div class="os">2</div>
+        <div class="os">3</div>
+        <div class="os">4</div>
+    </div>
+</body>
+
+</html>

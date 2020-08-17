@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .obox {
+            width: 600px;
+            height: 600px;
+            border: 1px solid #222;
+            /* 容器 */
+            display: flex;
+            /* 不换行 */
+            /* flex-wrap: nowrap; */
+            /* 换行 */
+            flex-wrap: wrap;
+        }
+
+        .os {
+            width: 200px;
+            height: 200px;
+            background: red;
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="obox">
+        <div class="os">1</div>
+        <div class="os">2</div>
+        <div class="os">3</div>
+        <div class="os">4</div>
+    </div>
+</body>
+
+</html>

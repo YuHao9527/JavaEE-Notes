@@ -129,3 +129,9 @@ Float = new Float(1.0); 这个的东西能存在，是因为Float类中有形参
 DoubIe d = new Double(1.0F) ； 这个能成立的原因是float 向上转型了。
 FIoat a = 1.0 ； 这个东西不成立是因为浮点型的默认类型是double，而double不会自动转成float,然后再装箱。
 Double d = 1.0f ；不成立的原因是因为Double类中的装箱方法，只有vaIueOf(String s) 和valueOf(double d) ；装箱本身可不会自动向上转型
+
+## 怎么检测一个线程是否拥有锁？
+
+### 答案：
+
+在java.lang.Thread中有一个方法叫holdsLock()，它返回true如果当且仅当当前线程拥有某个具体对象的锁。

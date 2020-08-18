@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 媒体查询 适配手机 平板 PC */
+        /* xs 手机*/
+        @media screen and (min-width:0) {
+            .container {
+                width: 100%;
+            }
+        }
+
+        /* sm 平板*/
+        @media screen and (min-width:768px) {
+            .container {
+                width: 750px;
+            }
+        }
+
+        /* 小PC md 平板*/
+        @media screen and (min-width:992px) {
+            .container {
+                width: 970px;
+            }
+
+            .container div {
+                float: left;
+            }
+
+            .container .left {
+                width: 40%;
+            }
+
+            .container .mid {
+                width: 40%;
+            }
+
+            .container .right {
+                width: 20%;
+            }
+        }
+
+        /* 大PC lg 电脑端*/
+        @media screen and (min-width:1200px) {
+            .container {
+                width: 1170px;
+            }
+
+            .container div {
+                float: left;
+            }
+
+            .container .left {
+                width: 20%;
+            }
+
+            .container .mid {
+                width: 60%;
+            }
+
+            .container .right {
+                width: 20%;
+            }
+        }
+
+        .container {
+            height: 2000px;
+            border: 1px solid #000;
+            margin: 0 auto;
+        }
+
+        .container .left {
+            background: #ccc;
+            height: 200px;
+        }
+
+        .container .mid {
+            background: #222;
+            height: 800px;
+        }
+
+        .container .right {
+            background: pink;
+            height: 400px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="left">1</div>
+        <div class="mid">2</div>
+        <div class="right">3</div>
+    </div>
+</body>
+
+</html>

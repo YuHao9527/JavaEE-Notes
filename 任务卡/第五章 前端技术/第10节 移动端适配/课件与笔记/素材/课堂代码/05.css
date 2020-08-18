@@ -1,0 +1,10 @@
+@media screen and (min-width: 540px) {
+  html {
+    font-size: 54px;
+  }
+}
+div {
+  width: 3.7037037rem;
+  height: 3.7037037rem;
+  background: #000;
+}

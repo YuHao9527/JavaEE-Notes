@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 媒体查询 适配手机 平板 PC */
+        /* xs 手机*/
+        @media screen and (min-width:0) {
+            .container {
+                width: 100%;
+            }
+        }
+
+        /* sm 平板*/
+        @media screen and (min-width:768px) {
+            .container {
+                width: 750px;
+            }
+        }
+
+        /* 小PC md 平板*/
+        @media screen and (min-width:992px) {
+            .container {
+                width: 970px;
+            }
+        }
+
+        /* 大PC lg 电脑端*/
+        @media screen and (min-width:1200px) {
+            .container {
+                width: 1170px;
+            }
+        }
+
+        .container {
+            height: 600px;
+            background: #000;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container"></div>
+</body>
+
+</html>

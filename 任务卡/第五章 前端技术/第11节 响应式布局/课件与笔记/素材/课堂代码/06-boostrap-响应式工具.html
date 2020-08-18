@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <!-- 要求 当前网页 使用 IE浏览器 最高版本的内核 来渲染 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!-- 视口的设置：视口的宽度和设备一致，默认的缩放比例和PC端一致，用户不能自行缩放 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Bootstrap Template</title>
+
+  <!-- Bootstrap 的文件引入 已经有初始化文件 Normalize.css-->
+  <link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--解决ie9以下浏览器对html5新增标签的不识别，并导致CSS不起作用的问题-->
+  <!--解决ie9以下浏览器对 css3 Media Query  的不识别 -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+
+  <!-- 条件注释:解决小于IE9的版本一些问题 -->
+  <!--[if lt IE 9]>
+      <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  <style>
+    .son {
+      height: 30px;
+      border: 1px solid #000;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="col-mg-3 son">1</div>
+    <div class="col-mg-3 son">2</div>
+    <div class="col-mg-3 son hidden-md">3</div>
+    <div class="col-mg-3 son">4</div>
+  </div>
+</body>
+
+</html>

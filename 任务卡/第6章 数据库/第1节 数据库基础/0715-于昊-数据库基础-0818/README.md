@@ -992,8 +992,7 @@ select classid,sex,count(*) as num from users group by classid,sex;
 | 2 | 男 | 2 |
 | 2 | 女 | 2 |
 +---------+------+-----+
-# 注意，在使用。group by分组时，一般除了聚合函数，其它在select后面出现的字段列都需要出现在grouop by后
-# 面
+# 注意，在使用。group by分组时，一般除了聚合函数，其它在select后面出现的字段列都需要出现在grouop by后面
 ```
 
 ###### Having子句

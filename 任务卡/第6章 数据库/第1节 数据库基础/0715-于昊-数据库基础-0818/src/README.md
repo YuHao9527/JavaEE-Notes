@@ -140,7 +140,7 @@ update stu set gradeId='1' where gradeId='3';
 select stuId from achievement where score=100;
 
 4.查询所有 1989 年出生的学生（1989-1-1~1990-1-1）
-select * from stu where bornTime < 1990-1-1 and born > 1989-1-1;
+select * from stu where bornTime between '1989-1-1' and '1989-12-31';
 
 5.查询学生姓名为“金蝶”的全部信息
 select * from stu where name='金蝶';

@@ -2,8 +2,10 @@ package dao;
 
 import bean.Book;
 import bean.User;
+import com.alibaba.fastjson.JSON;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +19,7 @@ import java.util.List;
 public class BookDao implements Dao {
     //使用ArrayList集合存储图书
     private List<Book> data = new ArrayList<>();
-    private static final File file = new File("src\\server\\book.txt");
+    private static final File file = new File("src\\server\\book.json");
     private final User admin = new User("user", "123456");
 
     public BookDao() {
@@ -90,9 +92,19 @@ public class BookDao implements Dao {
     public boolean getData() {
         if (file.length() > 0) {
             try {
-                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
-                data = (ArrayList<Book>) ois.readObject();
-            } catch (IOException | ClassNotFoundException e) {
+//                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+//                data = (ArrayList<Book>) ois.readObject();
+                FileInputStream fileInputStream = new FileInputStream(file);
+                InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, StandardCharsets.UTF_8);
+                BufferedReader reader = new BufferedReader(inputStreamReader);
+                String tempString = null;
+                String laststr = "";
+                while ((tempString = reader.readLine()) != null) {
+                    laststr += tempString;
+                }
+                reader.close();
+                data = JSON.parseArray(laststr, Book.class);
+            } catch (IOException e) {
                 e.printStackTrace();
                 return false;
             }
@@ -103,8 +115,9 @@ public class BookDao implements Dao {
     @Override
     public boolean putData() {
         try {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
-            oos.writeObject(data);
+            String json = JSON.toJSONString(data);
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,false), StandardCharsets.UTF_8));
+            bw.write(json);
         } catch (IOException e) {
             return false;
         }

@@ -292,3 +292,137 @@ Map集合:
 
 ### JSTL
 
+- JSP标准标签库(JSTL)是一个**JSP标签集合，它封装了JSP应用的通用核心功能。**
+- JSTL支持通用的、结构化的任务，比如**迭代，条件判断，XML文档操作，国际化标签，SQL标签。还提供一个框架来使用集成JSTL的自定义标签。**
+- 根据JSTL标签所提供的功能，可以将其分为5个类型。**核心标签、格式化标签、sql标签、xml标签、JSTL函数**
+
+#### JSTL的作用和语法格式
+
+```
+作用：简化JSP页面编写代码
+
+语法格式：
+	1. 下载 jakarta-taglibs-standard-1.1.2.zip 包并解压，将 jakarta-taglibs-standard-1.1.2/lib/ 下的两个 jar 文件：standard.jar 和 jstl.jar 文件拷贝到 /WEB-INF/lib/ 下。
+	2. 在JSP页面中引入<%@ taglib prefix=”页面使用的名称” uri=”功能范围的路径”%>
+```
+
+| 功能范围  | Uri                                                          | 前缀(可自定义) |
+| --------- | ------------------------------------------------------------ | -------------- |
+| core      | [http://java/sun.com/jsp/jstl/core](http://java/sun.com/jsp/jstl/core) | c              |
+| fmt       | [http://java/sun.com/jsp/jstl/fmt](http://java/sun.com/jsp/jstl/fmt) | fmt            |
+| sql       | [http://java/sun.com/jsp/jstl/sql](http://java/sun.com/jsp/jstl/sql) | sql            |
+| xml       | [http://java/sun.com/jsp/jstl/xml](http://java/sun.com/jsp/jstl/xml) | x              |
+| functions | [http://java/sun.com/jsp/jstl/function](http://java/sun.com/jsp/jstl/function) | fn             |
+
+#### 核心标签(core)
+
+1. 核心标签是最常用的JSTL标签。引用核心标签的语法格式:
+
+   ```jsp
+   <%@ taglib prefix="c" uri="http://java/sun.com/jsp/jstl/core" %>
+   ```
+
+2. 分类
+
+   ```
+   表达式操作：out、set、remove、catch
+   流程控制：if、choose、when、otherwise
+   迭代操作：forEach、forTokens
+   URL操作：import、param、url、redirect
+   ```
+
+   - Set标签
+     ＜c: set> 主要用来将变量存储至JSP范围中 或是JavaBean的属性或Map对象中
+
+     | 名称     | 说明               | 是否必须写 | 默认值 |
+     | -------- | ------------------ | ---------- | ------ |
+     | Value    | 要被存储的值       | 否         | 无     |
+     | var      | 存入的变量名称     | 否         | 无     |
+     | scope    | var变量的JSP范围   | 否         | Page   |
+     | target   | JavaBean或Map对象  | 否         | 无     |
+     | property | 指定target对象属性 | 否         | 无     |
+
+   - out标签
+
+     主要用来显示数据的内容
+
+     | 名称      | 说明                                  | 是否必须填写 | 默认值 |
+     | --------- | ------------------------------------- | ------------ | ------ |
+     | value     | 需要显示出来的值                      | 是           | 无     |
+     | default   | 如果value的值为null,则显示default的值 | 否           | 无     |
+     | escapeXml | 是否转换特殊字符，如: <转换从成 &lt； | 否           | True   |
+
+   - remove标签
+
+     主要移除变量
+
+     | 名称  | 说明             | 是否必须填写 | 默认值 |
+     | ----- | ---------------- | ------------ | ------ |
+     | Var   | 欲移除的变量名称 | 是           | 无     |
+     | Scope | var变量的JSP范围 | 否           | Page   |
+
+   - if标签
+
+     主要用于if判断
+
+     | 名称  | 说明                                                 | 是否必须填写 | 默认值 |
+     | ----- | ---------------------------------------------------- | ------------ | ------ |
+     | Test  | 表达式的结果为true，则执行标签体中的内容,false则相反 | 是           | 无     |
+     | var   | 用来存储test运算结果                                 | 否           | 无     |
+     | scope | var变量的JSP范围                                     | 否           | Page   |
+
+   - choose，when，otherwise作用相当于if-else
+
+     | 名称 | 说明                                         | 是否必须填写 | 默认 |
+     | ---- | -------------------------------------------- | ------------ | ---- |
+     | test | 如果表达式的结果为true，则执行标签体中的内容 | 是           | 无   |
+
+   - forEach
+
+     循环控制，它可以将数组,集合(Collection)中的成员循序浏览一遍
+
+     | 名称      | 说明                           | 是否必须填写 | 默认         |
+     | --------- | ------------------------------ | ------------ | ------------ |
+     | var       | 用来存放现在指定的成员         | 是           | 无           |
+     | items     | 被迭代的集合对象               | 否           | 无           |
+     | varStatus | 用来存放现在指定的相关成员信息 | 否           | 无           |
+     | begin     | 开始的位置                     | 否           | 0            |
+     | end       | 结束的位置                     | 否           | 最后一个成员 |
+     | step      | 每次迭代的间隔数               | 否           | 1            |
+
+#### 格式化标签(fmt)
+
+1. 引用核心标签的语法格式:
+
+   ```jsp
+   <%@ taglib prefix="fmt" uri="http://java/sun.com/jsp/jstl/fmt" %>
+   ```
+
+2. formatDate标签
+
+   将日期类型格式化为指定格式的字符串
+
+   | 名称    | 说明                                                         | 是否必须填写 | 默认值 |
+   | ------- | ------------------------------------------------------------ | ------------ | ------ |
+   | value   | 将要被格式化的数据                                           | 是           | 无     |
+   | pattern | 格式化模式，于simpleDateFormat参数设置一样                   | 是           | 无     |
+   | var     | 格式化后的字符串所要存放的变量，如不指定var，则会将格式化的结果直接显示在页面上 | 否           | 无     |
+   | scope   | 变量存放的作用域                                             | 否           | page   |
+   | type    | 其取值为date、time、both、表示给出的value是日期、时间、还是两者都包含 | 否           | date   |
+
+3. formatNumber标签
+
+   按照指定格式对数字进行格式化
+
+   | 名称             | 说明                                | 是否必须填写 | 默认值 |
+   | ---------------- | ----------------------------------- | ------------ | ------ |
+   | Value            | 要被格式化的数据                    | 是           | 无     |
+   | maxIntegerDigits | 整数部分最多的位数                  | 否           | 无     |
+   | minIntegerDigits | 整数部分最少的位数                  | 否           | 无     |
+   | maxFrctionDigits | 小数部分最多的位数                  | 否           | 无     |
+   | minFrctionDigits | 小数部分最少的位数                  | 否           | 无     |
+   | var              | 存储格式化结果的变量                | 否           | 无     |
+   | scope            | 指定var变量的作用域                 | 否           | Page   |
+   | integerOnly      | 是否只解析整形数true或者浮点数false | 否           |        |
+
+   ​

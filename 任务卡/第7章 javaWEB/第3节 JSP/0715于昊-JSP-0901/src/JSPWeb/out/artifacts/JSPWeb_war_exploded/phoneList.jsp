@@ -74,7 +74,7 @@
                     <a href="" style="text-decoration:none">${phone.info}</a>
                 </div>
                 <div class="phone-price">
-                    <span style="color: #FF0000">¥${phone.price}</span>
+                    <span style="color: #ff0000">¥${phone.price}</span>
                 </div>
             </div>
         </c:forEach>

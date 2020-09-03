@@ -19,7 +19,7 @@ import java.util.List;
  * @Author 0715-YuHao
  * @Date 2020/9/2 11:21
  */
-@WebServlet(urlPatterns = {"/phoneList"})
+@WebServlet(value = "/phoneList")
 public class PhoneServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

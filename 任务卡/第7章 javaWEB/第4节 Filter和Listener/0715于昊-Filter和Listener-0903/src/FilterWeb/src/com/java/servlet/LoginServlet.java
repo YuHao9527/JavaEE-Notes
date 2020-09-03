@@ -33,7 +33,7 @@ public class LoginServlet extends HttpServlet {
             String password = req.getParameter("upass");
             ppt.setString(1, username);
             ResultSet res = ppt.executeQuery();
-            while (res.next()) {
+            if (res.next()) {
                 if (res.getString("password").equals(password)) {
                     req.getSession().setAttribute("loginName", username);
                     req.getSession().setAttribute("points", res.getInt("points"));
@@ -43,6 +43,10 @@ public class LoginServlet extends HttpServlet {
                     writer.print("<script>alert('登录失败，用户名或密码错误！');window.location.href='login.jsp';</script>");
                     writer.close();
                 }
+            }else {
+                PrintWriter writer = resp.getWriter();
+                writer.print("<script>alert('登录失败，用户名或密码错误！');window.location.href='login.jsp';</script>");
+                writer.close();
             }
 
         } catch (SQLException throwables) {

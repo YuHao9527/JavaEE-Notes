@@ -10,18 +10,18 @@
         </filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>filter2</filter-name>
+        <filter-name>filter1</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
     <filter>
         <filter-name>filter2</filter-name>
         <filter-class>
-            com.java.util.CharSetFilter
+            com.java.util.DownloadFilter
         </filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>filter1</filter-name>
-        <url-pattern>/sucess</url-pattern>
+        <filter-name>filter2</filter-name>
+        <url-pattern>/download</url-pattern>
     </filter-mapping>
 </web-app>

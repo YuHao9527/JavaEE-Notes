@@ -34,9 +34,8 @@ public class SignUpServlet extends HttpServlet {
             req.getSession().setAttribute("uName", username);
             req.getSession().setAttribute("uPass", password);
             PrintWriter writer = resp.getWriter();
-            writer.print("<script>alert('注册成功');</script>");
+            writer.print("<script>alert('注册成功');window.location.href='login.jsp';</script>");
             writer.close();
-            req.getRequestDispatcher("/login.jsp").forward(req, resp);
         } catch (Exception throwables) {
             throwables.printStackTrace();
         }finally {

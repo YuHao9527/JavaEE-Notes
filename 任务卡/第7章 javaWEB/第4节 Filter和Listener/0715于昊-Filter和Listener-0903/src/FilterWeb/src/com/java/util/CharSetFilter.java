@@ -3,7 +3,6 @@ package com.java.util;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.PageContext;
 import java.io.IOException;
 
 /**
@@ -28,7 +27,8 @@ public class CharSetFilter implements Filter {
         response.setContentType("text/html;charset=utf-8");
         String uri = request.getRequestURI();
         if (uri.endsWith("/") || uri.endsWith("login.jsp") || uri.endsWith("message.jsp") ||
-                uri.endsWith("signUp.jsp") || loginName != null) {
+                uri.endsWith("/login") || uri.endsWith("signUp") || uri.endsWith("signUp.jsp") ||
+                uri.endsWith("/charge")|| uri.endsWith("/download") ||loginName != null) {
             filterChain.doFilter(servletRequest, servletResponse);
         }else {
             response.sendRedirect("message.jsp");

@@ -60,20 +60,23 @@
             color: red;
         }
 
+        #iCharge {
+            width: 200px;
+        }
     </style>
 
     <script src="jquery-3.5.1.min.js" type="text/javascript"></script>
     <script>
         $(function () {
             $("#iCharge").focusout(function () {
-                if ($(this).val().match(/[0-9]/) == null) {
+                if ($(this).val().match(/^[1-9][0-9]{0,4}$/) == null) {
                     $(this).val("");
                     $(this).prop("placeholder","你的输入不合法");
                     $(this).addClass("change");
                 }
             }).focus(function () {
                 if($(this).val().trim() === ""){
-                    $(this).prop("placeholder","请输入你要充值的积分");
+                    $(this).prop("placeholder","请输入你要充值的积分(1-10000)");
                     $(this).removeClass("change");
                 }
             })
@@ -92,7 +95,7 @@
     </div>
     <div class="charge">
         <form action="/charge" method="post">
-            <input id="iCharge" type="text" placeholder="请输入你要充值的积分" name="point">
+            <input id="iCharge" type="text" placeholder="请输入你要充值的积分(1-10000)" name="point">
             <input type="submit" value="充值">
         </form>
     </div>

@@ -21,21 +21,32 @@ import java.sql.*;
 public class SignUpServlet extends HttpServlet {
     private Connection conn;
     private PreparedStatement state;
+    private PreparedStatement state2;
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            conn = DruidUtil.getConnection();
-            state = conn.prepareStatement("INSERT INTO user VALUES (null, ?, ?, 0)");
             String username = req.getParameter("uname");
             String password = req.getParameter("upass");
+            conn = DruidUtil.getConnection();
+            state = conn.prepareStatement("select username from user where username=?");
             state.setString(1, username);
-            state.setString(2, password);
-            state.execute();
-            req.getSession().setAttribute("uName", username);
-            req.getSession().setAttribute("uPass", password);
-            PrintWriter writer = resp.getWriter();
-            writer.print("<script>alert('注册成功');window.location.href='login.jsp';</script>");
-            writer.close();
+            ResultSet res = state.executeQuery();
+            if (res.next()) {
+                PrintWriter writer = resp.getWriter();
+                writer.print("<script>alert('注册失败，用户名已存在');window.location.href='signUp.jsp';</script>");
+                writer.close();
+            }else {
+                state2 = conn.prepareStatement("INSERT INTO user VALUES (null, ?, ?, 0)");
+                state2.setString(1, username);
+                state2.setString(2, password);
+                state2.execute();
+                req.getSession().setAttribute("uName", username);
+                req.getSession().setAttribute("uPass", password);
+                PrintWriter writer = resp.getWriter();
+                writer.print("<script>alert('注册成功');window.location.href='login.jsp';</script>");
+                writer.close();
+                state2.close();
+            }
         } catch (Exception throwables) {
             throwables.printStackTrace();
         }finally {

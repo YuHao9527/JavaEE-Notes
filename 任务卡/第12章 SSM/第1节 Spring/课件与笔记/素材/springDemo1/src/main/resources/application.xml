@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+     <!--id="对象名" class="类的完整路径"
+     IOC将对象统一管理，统一分配-->
+    <bean id="udao" class="com.xzk.dao.impl.UsersDaoImpl2"></bean>
+    <bean id="uservice" class="com.xzk.service.impl.UsersServiceImpl">
+        <property name="usersDao" ref="udao"></property>
+    </bean>
+
+
+
+
+
+
+
+
+
+    <bean id="u1" class="com.xzk.bean.Users" init-method="userInit" destroy-method="usersDes"></bean>
+    <!--给属性赋值时，对象类型选择ref,非对象类型选择value-，构造方法测试-->
+    <bean id="u2" class="com.xzk.bean.Users">
+        <constructor-arg index="0" value="张三" ></constructor-arg>
+        <constructor-arg index="1" value="18"></constructor-arg>
+    </bean>
+    <!--静态方法测试-->
+    <bean id="u3" class="com.xzk.bean.Users" factory-method="getStudent"></bean>
+    <!--非静态方法测试-->
+    <bean id="u4" class="com.xzk.bean.Users"></bean>
+    <bean id="u5" factory-bean="u4" factory-method="getStudent2"></bean>
+</beans>

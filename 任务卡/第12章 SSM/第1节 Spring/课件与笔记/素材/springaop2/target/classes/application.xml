@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+ http://www.springframework.org/schema/aop
+   http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
+
+   <bean id="udao" class="com.xzk.dao.impl.UsersDaoImpl"></bean>
+   <bean id="uservice" class="com.xzk.service.impl.UsersServiceImpl">
+       <property name="usersDao" ref="udao"></property>
+   </bean>
+
+    <!---创建增强类的对象-->
+     <bean id="myaop" class="com.xzk.util.MyAop"></bean>
+    <bean id="beforeaop" class="com.xzk.util.BeforeAop"></bean>
+    <!--建立增强类和目标方法之间的关系-->
+   <aop:config>
+        <aop:pointcut id="mypc" expression="execution(* com.xzk.service.*.*(..))"></aop:pointcut>
+       <aop:advisor advice-ref="beforeaop" pointcut-ref="mypc"></aop:advisor>
+        <!--<aop:aspect ref="myaop">
+            &lt;!&ndash;前置增强&ndash;&gt;
+           <aop:before method="before" pointcut-ref="mypc"></aop:before>
+            &lt;!&ndash;后置增强&ndash;&gt;
+          <aop:after-returning method="after" pointcut-ref="mypc"></aop:after-returning>
+            &lt;!&ndash;环绕增强&ndash;&gt;
+            &lt;!&ndash;<aop:around method="myaroud" pointcut-ref="mypc"></aop:around>&ndash;&gt;
+            &lt;!&ndash;异常增强&ndash;&gt;
+            <aop:after-throwing method="myex" pointcut-ref="mypc"></aop:after-throwing>
+            &lt;!&ndash;最终增强&ndash;&gt;
+            <aop:after method="aftera" pointcut-ref="mypc"></aop:after>
+        </aop:aspect>-->
+   </aop:config>
+
+
+</beans>

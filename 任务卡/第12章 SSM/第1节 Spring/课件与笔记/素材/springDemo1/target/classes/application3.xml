@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="u1" class="com.xzk.bean.Users"></bean>
+     <bean id="t1" class="com.xzk.bean.Teacher">
+         <property name="objects">
+              <list>
+                  <value>张三1</value>
+                  <value>123</value>
+                  <value>abc</value>
+                  <ref bean="u1"></ref>
+              </list>
+         </property>
+        <property name="list">
+            <list>
+                <value>张三2</value>
+                <value>1234</value>
+                <value>abcd</value>
+                <ref bean="u1"></ref>
+            </list>
+        </property>
+         <property name="set">
+             <set>
+                 <value>张三3</value>
+                 <value>12345</value>
+                 <value>abcde</value>
+                 <ref bean="u1"></ref>
+             </set>
+         </property>
+         <property name="map">
+             <map>
+                 <entry key="班长" value="刘能"></entry>
+                 <entry key="校花" value="谢大脚"></entry>
+                 <entry key="user" value-ref="u1"></entry>
+             </map>
+         </property>
+         <property name="properties">
+               <props>
+                    <prop key="username">root</prop>
+                    <prop key="password">1234</prop>
+               </props>
+         </property>
+     </bean>
+</beans>

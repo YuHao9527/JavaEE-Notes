@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+   <!--DI赋值-->
+   <bean id="stu1" class="com.xzk.bean.Student">
+       <property name="stuname" value="张三"></property>
+   </bean>
+    <bean id="stu2" class="com.xzk.bean.Student">
+        <constructor-arg name="sex" value="男" ></constructor-arg>
+        <constructor-arg name="age" value="19" ></constructor-arg>
+        <constructor-arg name="stuname" value="#{stu1.stuname}"></constructor-arg>
+    </bean>
+ <bean id="stu3" class="com.xzk.bean.Student" p:stuname="aa" p:age="18" p:sex="女" ></bean>
+</beans>

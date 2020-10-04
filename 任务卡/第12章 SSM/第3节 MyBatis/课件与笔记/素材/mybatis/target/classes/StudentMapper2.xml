@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace="接口的完整路径"-->
+<mapper namespace="com.yhp.dao.StudentDao2">
+   <select id="finda" resultType="student">
+      select * from student where studentid in
+       <foreach collection="list" item="sid" open="(" close=")" separator=",">
+           #{sid}
+       </foreach>
+   </select>
+
+    <select id="findb" resultType="student">
+        select * from student where studentid in
+        <foreach collection="array" item="sid" open="(" close=")" separator=",">
+            #{sid}
+        </foreach>
+    </select>
+
+    <select id="findc" resultType="student">
+        select * from student where studentid in
+        <foreach collection="ids" item="sid" open="(" close=")" separator=",">
+            #{sid}
+        </foreach>
+    </select>
+    <select id="findd" resultType="student">
+         select * from student where 1=1
+         <if test="stuname!=null and stuname !=''">
+             and  stuname like "%"#{stuname}"%"
+         </if>
+        <if test="sno!=null and sno!=''">
+             and studentno=#{sno}
+        </if>
+    </select>
+    <select id="finde" resultType="student">
+        select * from student where 1=1
+        <if test="stuName!=null and stuName !=''">
+            and  stuname like "%"#{stuName}"%"
+        </if>
+        <if test="studentNo!=null and studentNo!=''">
+            and studentno=#{studentNo}
+        </if>
+    </select>
+    <select id="findf" resultType="student">
+        <!--select * from student where studentid between  #{begin} and #{end}-->
+        select * from student where studentid>=#{begin} and studentid   <![CDATA[ <= ]]>  #{end}
+    </select>
+</mapper>

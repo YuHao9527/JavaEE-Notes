@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace="接口的完整路径"-->
+<mapper namespace="com.yhp.dao.StudentDao">
+    <cache eviction="FIFO"
+           flushInterval="60000"
+           size="512"
+           readOnly="true"/>
+    <resultMap id="rs1" type="com.yhp.bean.Student">
+        <result property="age" column="stuage"></result>
+    </resultMap>
+
+    <!--id="方法名"-->
+     <select id="getall" resultMap="rs1">
+         select * from student
+     </select>
+    <select id="findById" parameterType="int" resultType="com.yhp.bean.Student">
+        select * from student where studentid=#{id}
+    </select>
+    <!--增删改返回的是收影响的行数,不需要配置resultType-->
+    <insert id="insertStudent" parameterType="com.yhp.bean.Student" useGeneratedKeys="true" keyProperty="studentId">
+        insert into student(studentno,stuname) values(#{studentNo},#{stuName})
+    </insert>
+
+    <insert id="insertStudent3" parameterType="com.yhp.bean.Student">
+        insert into student(studentno,stuname) values(#{sno},#{sname})
+    </insert>
+
+    <select id="find" resultType="map">
+        select max(studentid) max,min(studentid) min,avg(studentid) avg from student
+    </select>
+</mapper>

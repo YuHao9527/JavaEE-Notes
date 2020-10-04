@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace="接口的完整路径"-->
+<mapper namespace="com.yhp.dao.WifeDao">
+    <resultMap id="rs6" type="com.yhp.bean.Husband">
+        <id property="husId" column="husid"></id>
+        <result property="husName" column="husname"></result>
+        <association property="wife" javaType="com.yhp.bean.Wife">
+            <id property="wifeId" column="wifeid"></id>
+            <result property="wifeName" column="wifename"></result>
+        </association>
+    </resultMap>
+    <resultMap id="rs7" type="com.yhp.bean.Wife">
+        <id property="wifeId" column="wifeid"></id>
+        <result property="wifeName" column="wifename"></result>
+        <association property="husband" javaType="com.yhp.bean.Husband">
+            <id property="husId" column="husid"></id>
+            <result property="husName" column="husname"></result>
+        </association>
+    </resultMap>
+    <select id="findByhusId" resultMap="rs6">
+  select * from wife w,husband h
+  where w.wifeid=h.wid and h.husid=#{husid}
+    </select>
+
+    <select id="findByWifeId" resultMap="rs7">
+        select * from wife w,husband h
+  where w.wifeid=h.wid and w.wifeid=#{wifeid}
+    </select>
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace="接口的完整路径"-->
+<mapper namespace="com.xzk.dao.StudentDao2">
+    <resultMap id="rs3" type="com.xzk.bean.Student">
+        <id column="studentid" property="studentId"></id>
+        <result column="stuname" property="stuName"></result>
+        <result column="studentno" property="studentNo"></result>
+        <result column="stuage" property="age"></result>
+        <association property="grade" javaType="com.xzk.bean.Grade">
+            <id column="gid" property="gid"></id>
+            <result column="gname" property="gname"></result>
+        </association>
+    </resultMap>
+
+</mapper>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace="接口的完整路径"-->
+<mapper namespace="com.yhp.dao.RoleDao">
+    <resultMap id="rs4" type="com.yhp.bean.Role">
+        <id property="roleId" column="roleid"></id>
+        <result property="roleName" column="rolename"></result>
+        <collection property="menuList" ofType="com.yhp.bean.Menu">
+            <id property="menuId" column="menuid"></id>
+            <result property="menuName" column="menuname"></result>
+            <result property="menuPath" column="menupath"></result>
+        </collection>
+    </resultMap>
+    <resultMap id="rs5" type="com.yhp.bean.Menu">
+        <id property="menuId" column="menuid"></id>
+        <result property="menuName" column="menuname"></result>
+        <result property="menuPath" column="menupath"></result>
+        <collection property="roleList" ofType="com.yhp.bean.Role">
+            <id property="roleId" column="roleid"></id>
+            <result property="roleName" column="rolename"></result>
+        </collection>
+    </resultMap>
+   <select id="findByRoleId" resultMap="rs4">
+    select * from role r,menu m ,middle mid
+        where r.roleid=mid.roleid and m.menuid=mid.menuid
+        and r.roleid=#{roleid}
+   </select>
+    <select id="findByMenuId" resultMap="rs5">
+          select * from role r,menu m ,middle mid
+        where r.roleid=mid.roleid and m.menuid=mid.menuid
+         and m.menuid=#{menuid}
+    </select>
+</mapper>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace="接口的完整路径"-->
+<mapper namespace="com.yhp.dao.GradeDao">
+    <resultMap id="rs2" type="com.yhp.bean.Grade">
+        <!--先描述自身的信息，然后描述关联表的信息,id表述主键列，非主键列使用result描述-->
+        <id column="gid" property="gid"></id>
+        <result column="gname" property="gname"></result>
+        <collection property="studentList" ofType="com.yhp.bean.Student">
+            <id column="studentid" property="studentId"></id>
+            <result column="stuname" property="stuName"></result>
+            <result column="studentno" property="studentNo"></result>
+            <result column="stuage" property="age"></result>
+        </collection>
+    </resultMap>
+    <resultMap id="rs3" type="com.yhp.bean.Student">
+        <id column="studentid" property="studentId"></id>
+        <result column="stuname" property="stuName"></result>
+        <result column="studentno" property="studentNo"></result>
+        <result column="stuage" property="age"></result>
+        <association property="grade" javaType="com.yhp.bean.Grade">
+            <id column="gid" property="gid"></id>
+            <result column="gname" property="gname"></result>
+        </association>
+    </resultMap>
+   <select id="findbyGid" resultMap="rs2">
+      select * from grade g,student s
+      where s.gradeid=g.gid and g.gid=#{id}
+   </select>
+
+    <select id="findAllStudent" resultMap="rs3">
+          select * from grade g,student s where s.gradeid=g.gid
+    </select>
+</mapper>

@@ -1,0 +1,28 @@
+DELETE FROM user2;
+
+INSERT INTO user2 (id, name, age, email) VALUES
+(1, 'Jone', 18, 'test1@baomidou.com'),
+(2, 'Jack', 20, 'test2@baomidou.com'),
+(3, 'Tom', 28, 'test3@baomidou.com'),
+(4, 'Sandy', 21, 'test4@baomidou.com'),
+(5, 'kaikeba1', 331, 'test4@baomidou.com'),
+(6, 'kaikeba2', 331, 'test4@baomidou.com'),
+(7, 'kaikeba3', 331, 'test4@baomidou.com'),
+(8, 'kaikeba4', 331, 'test4@baomidou.com'),
+(9, 'kaikeba5', 331, 'test4@baomidou.com'),
+(10, 'kaikeba6', 331, 'test4@baomidou.com'),
+(11, 'kaikeba7', 331, 'test4@baomidou.com'),
+(12, 'kaikeba8', 331, 'test4@baomidou.com'),
+(13, 'kaikeba9', 331, 'test4@baomidou.com'),
+(14, 'kaikeba10', 331, 'test4@baomidou.com'),
+(15, 'kaikeba11', 331, 'test4@baomidou.com'),
+(16, 'kaikeba12', 331, 'test4@baomidou.com'),
+(17, 'kaikeba13', 331, 'test4@baomidou.com'),
+(18, 'kaikeba14', 331, 'test4@baomidou.com'),
+(19, 'kaikeba15', 331, 'test4@baomidou.com'),
+(20, 'kaikeba16', 331, 'test4@baomidou.com'),
+(21, 'kaikeba17', 331, 'test4@baomidou.com'),
+(22, 'kaikeba18', 331, 'test4@baomidou.com'),
+(23, 'kaikeba19', 331, 'test4@baomidou.com'),
+(24, 'kaikeba15', 331, 'test4@baomidou.com'),
+(25, 'Billie', 24, 'test5@baomidou.com');

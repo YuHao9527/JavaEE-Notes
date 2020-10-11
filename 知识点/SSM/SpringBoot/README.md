@@ -379,7 +379,107 @@ public class JdbcConfig {
 
   ![debug](img\debug2.png)
 
-### 四、自动配置
+### 四、自动配置原理
+
+#### 1. @SpringBootApplication
+
+- 源码
+
+  ```java
+  @Target({ElementType.TYPE})
+  @Retention(RetentionPolicy.RUNTIME)
+  @Documented
+  @Inherited
+  @SpringBootConfiguration
+  @EnableAutoConfiguration
+  @ComponentScan(
+      excludeFilters = {@Filter(
+      type = FilterType.CUSTOM,
+      classes = {TypeExcludeFilter.class}
+  ), @Filter(
+      type = FilterType.CUSTOM,
+      classes = {AutoConfigurationExcludeFilter.class}
+  )}
+  )
+  public @interface SpringBootApplication {
+  }
+  ```
+
+  - @SpringBootConfiguration
+
+    ```java
+    /**
+     * Indicates that a class provides Spring Boot application
+     * {@link Configuration @Configuration}. Can be used as an alternative to the Spring's
+     * standard {@code @Configuration} annotation so that configuration can be found
+     * automatically (for example in tests).
+     * <p>
+     * Application should only ever include <em>one</em> {@code @SpringBootConfiguration} and
+     * most idiomatic Spring Boot applications will inherit it from
+     * {@code @SpringBootApplication}.
+     *
+     * @author Phillip Webb
+     * @since 1.4.0
+     */
+    @Target({ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    @Configuration
+    public @interface SpringBootConfiguration {
+    }
+    ```
+
+    通过这段我们可以看出，在这个注解上面，又有一个@Configuration 注解。这个注解的作用就是声明当前类是一个配置类，然后Spring会自动扫描到添加了@Configuration 的类，并且读取其中的配置信息。
+
+  - @EnableAutoConfiguration
+
+    ```
+    启用Spring应用上下文的自动配置，尝试猜测和配置您可能需要的bean类。自动配置类通常基于您的classpath和您定义的bean类来应用。
+    ```
+
+  - @ComponentScan
+
+    ```java
+    /**
+     * Configures component scanning directives for use with @{@link Configuration} classes.
+     * Provides support parallel with Spring XML's {@code <context:component-scan>} element.
+     *
+     * <p>Either {@link #basePackageClasses} or {@link #basePackages} (or its alias
+     * {@link #value}) may be specified to define specific packages to scan. If specific
+     * packages are not defined, scanning will occur from the package of the
+     * class that declares this annotation.
+     *
+     * <p>Note that the {@code <context:component-scan>} element has an
+     * {@code annotation-config} attribute; however, this annotation does not. This is because
+     * in almost all cases when using {@code @ComponentScan}, default annotation config
+     * processing (e.g. processing {@code @Autowired} and friends) is assumed. Furthermore,
+     * when using {@link AnnotationConfigApplicationContext}, annotation config processors are
+     * always registered, meaning that any attempt to disable them at the
+     * {@code @ComponentScan} level would be ignored.
+     *
+     * <p>See {@link Configuration @Configuration}'s Javadoc for usage examples.
+     *
+     * @author Chris Beams
+     * @author Juergen Hoeller
+     * @author Sam Brannen
+     * @since 3.1
+     * @see Configuration
+     */
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.TYPE)
+    @Documented
+    @Repeatable(ComponentScans.class)
+    public @interface ComponentScan {
+    }
+    ```
+
+    翻译一下注释：
+
+    > 配置组件扫描指令与@Configuration类一起使用。
+    > 提供与Spring XML的\<context:component-scan>元素并行的支持。
+    > 可以指定basePackageClasses或basePackages（或其别名值）来定义要扫描的特定包。如果没有定义特定的包，扫描将从声明该注解的类的包中进行。
+
+    而我们的@SpringBootApplication注解声明的类就是main函数所在的启动类，因此扫描的包是该类所在包及其子包。因此，一般启动类会放在一个比较前的包目录中。
 
 ### 五、整合SpringMVC
 

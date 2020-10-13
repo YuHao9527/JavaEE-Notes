@@ -674,7 +674,7 @@ spring.datasource.url=jdbc:mysql://localhost:3306/springboot
 spring.datasource.username=root
 spring.datasource.password=
 # 可省略，SpringBoot自动推断
-spring.datasource.driverClassName=com.mysql.jdbc.Driver 
+spring.datasource.driverClassName=com.mysql.jdbc.Driver
 
 # 连接池连接超时时间
 spring.datasource.hikari.idle-timeout=60000
@@ -871,7 +871,7 @@ public class UserDaoTest {
 <dependency>
     <groupId>tk.mybatis</groupId>
     <artifactId>mapper-spring-boot-starter</artifactId>
-    <version>2.0.2</version>
+    <version>2.0.4</version>
 </dependency>
 ```
 
@@ -1221,8 +1221,8 @@ public class UserController {
 `Thymeleaf`会在第一次对模板解析之后进行缓存，极大的提高了并发处理能力。但是这给我们开发带来了不便，修改页面后并不会立刻看到效果，我们开发阶段可以关掉缓存使用：
 
 ```properties
-# 开发阶段关闭thymeleaf的模板缓存, 默认为关闭的
-spring.thymeleaf.cache=true
+# 开发阶段关闭thymeleaf的模板缓存
+spring.thymeleaf.cache=false
 ```
 
 **注意：**
@@ -1309,26 +1309,215 @@ spring.thymeleaf.cache=true
 
 ##### 常用th标签
 
-| 关键字  | 功能介绍 | 案例                                                  |
-| ------- | -------- | ----------------------------------------------------- |
-| th:text | 文本替换 | `<p th:text="${collect.description}">description</p>` |
+| 关键字      | 功能介绍                                     | 案例                                                         |
+| ----------- | -------------------------------------------- | ------------------------------------------------------------ |
+| th:text     | 文本替换                                     | `<p th:text="${collect.description}">description</p>`        |
+| th:id       | 替换id                                       | `<input th:id="'xxx' + ${collect.id}"/>`                     |
+| th:utext    | 支持html的文本替换                           | `<p th:utext="${htmlcontent}">conten</p>`                    |
+| th:object   | 替换对象                                     | `<div th:object="${session.user}">`                          |
+| th:value    | 属性赋值                                     | `<input th:value="${user.name}"/>`                           |
+| th:with     | 变量赋值运算                                 | `<div th:with="isEven=${prodStat.cout}%2==0"></div>`         |
+| th:style    | 设置样式                                     | `th:style="'display:' + @{(${sitrue} ? 'none' : 'inline-block')} + ''"` |
+| th:onclick  | 点击事件                                     | `th:onclick="getCollect()"`                                  |
+| th:each     | 属性赋值                                     | `<tr th:each="user,userStat:${users}">`                      |
+| th:if       | 判断条件                                     | `<a th:if="${userId == collect.userId}">`                    |
+| th:unless   | 和if判断相反                                 |                                                              |
+| th:href     | 连接地址                                     | `<a th:href="'/approve/' + ${user.id}">审核</a>`             |
+| th:switch   | 多路选择 配合th:case                         | `<div th:switch="${user.role}">`                             |
+| th:case     | th:switch的一个分支                          | `<p th:case="'admin'">User is an administrator</p>`          |
+| th:fragment | 布局标签，定义一个代码片段，方便其他地方引用 | `<div th:fragment="alert">`                                  |
+| th:include  | 布局标签，替换内容到引入的文件               | `<head th:include="layout :: htmlhead" th:with="title='xx'"></head>` |
+| th:replace  | 布局标签，替换整个标签到引入的文件           | `<div th:replace="fragments/header :: title">< /div>`        |
+| th:selected | selected选择框选中                           | `th:selected="(xxx.id == {configObj.dd})"`                   |
+| th:src      | 图片类地址引入                               | `<img class="img-responsive" alt="App Logo" th:src="@{/img/logo.png}"/>` |
+| th:inline   | 定义js脚本可以使用变量                       | `<script type="text/javascript" th:inline="javascript"`      |
+| th:action   | 表单提交的地址                               | `<form action="subscribe.html" th:action="@{/subscribe}">`   |
+| th:remove   | 删除某个属性                                 | `<tr th:remove="all"> 1.all:删除包含标签和所有的孩子。2.body:不包含标记删除,但删除其所有的孩子。3.tag:包含标记的删除,但不删除它的孩子。4.all-but-first:删除所有包含标签的孩子,除了第一个。5.none:什么也不做。这个值是有用的动态评估。` |
+| th:attr     | 设置标签属性，多个属性可以用逗号分隔         | `th:attr="src=@{/image/aa.jpg},title=#{logo}"，一般用的比较少。` |
 
 ##### 基本用法
 
 1. 赋值、字符串拼接
+
+   ```html
+   <a th:href="|/update/${user.id}|">修改</a>
+   <a th:href="'/approve/' + ${user.id}">审核</a>
+   ```
+
 2. 条件判断 if/Unless
+
+   `Thymeleaf`中使用`th:if`和`th:unless`属性进行条件判断，下面的例子中，` <a> `标签只有在`th:if `中条件成立时才显示：
+
+   ```html
+   <h5>if指令</h5>
+   <a th:if="${users.size() > 0}">查询结果存在</a><br>
+   <a th:if="${users.size() <= 0}">查询结果不存在</a><br>
+   <a th:unless="${session.user != null}" href="#">登录</a><br>
+   ```
+
+   `th:unless`于`th:if`恰好相反，只有表达式中的条件不成立，才会显示其内容。
+
+   也可以使用` (if) ? (then) : (else) `这种语法来判断显示的内容。
+
 3. for循环
+
+   ```html
+   <tr th:each="user, status : ${users}" th:object="${user}" th:bgcolor="${status.even} ? 'grey'">
+               <td th:text="${user.id}">1</td>
+               <td th:text="*{name}">张三</td>
+               <td th:text="*{userName}">zhangSan</td>
+               <td th:text="${user.age}">20</td>
+               <td th:text="${user.sex} == 1 ? '男': '女'">男</td>
+               <td th:text="${#dates.format(user.birthday, 'yyyy-MM-dd')}">1980-02-30</td>
+               <td th:text="${user.note}">1</td>
+               <td>
+                   <a th:href="@{/delete(id=${user.id}, userName=*{userName})}">删除</a>
+                   <a th:href="|/update/${user.id}|">修改</a>
+                   <a th:href="'/approve/' + ${user.id}">审核</a>
+               </td>
+           </tr>
+   ```
+
+   tatus称作状态变量，属性有：
+
+   - index:当前迭代对象的index（从0开始计算）
+   - count: 当前迭代对象的index(从1开始计算)
+   - size:被迭代对象的大小
+   - current:当前迭代变量
+   - even/odd:布尔值，当前循环是否是偶数/奇数（从0开始计算）
+   - first:布尔值，当前循环是否是第一个
+   - last:布尔值，当前循环是否是最后一个
+
 4. 内联文本
+
+   内联文本：[[…]]内联文本的表示方式，使用时，必须先用`th:inline="text"`激活(`th:inline="none"`关闭)，`th:inline`可以在父级标签内使用，甚至作为body的标签。内联文本尽管比`th:text`的代码少，但不利于原型显示。
+
+   - 在thymeleaf指令中显示
+
+     ```html
+     <h3 th:text="${text}">静态内容</h3>
+     ```
+
+   - 使用内联文本显示model attribute
+
+     ```html
+     <h4>内联文本</h4>
+     <div>
+         <h5 th:inline="text">[[${text}]]</h5>
+         <h5 th:inline="none">[[${text}]]</h5>
+         <h5>[[${text}]]</h5>
+     </div>
+     ```
+
+   > 原则能用指令就用th指令
+
 5. 内联js
+
+   内联文本：[[…]]内联文本的表示方式，使用时，必须先用`th:inline="javascript"`激活(`th:inline="none"`关闭)，`th:inline`可以在父级标签内使用，甚至作为body的标签。内联文本尽管比`th:text`的代码少，但不利于原型显示。
+
+   ```html
+   <h5>内联js</h5>
+   <script th:inline="javascript">
+       /*<![CDATA[*/
+       var text = '[[${text}]]';
+       alert(text);
+       /*]]>*/
+   </script>
+   ```
+
 6. 内嵌变量
 
+   为了模板更加易用，`Thymeleaf`还提供了一系列`Utility`对象（内置于Context中），可以通过#直接访问：
+
+   - dates ： java.util.Date**的功能方法类。
+
+     ```html
+     <h5>内置变量</h5>
+     <h6 th:text="${#dates.createNow()}">获取当前日期</h6>
+     ```
+
+   - calendars：类似#dates，面向java.util.Calendar。
+
+   - numbers：格式化数字的功能方法类。
+
+   - strings：字符串对象的功能类，contains,startWiths,prepending/appending等等。
+
+     ```html
+     <h5>内置变量</h5>
+     <h6 th:text="${#dates.createNow()}">获取当前日期</h6>
+     <h6 th:text="${#strings.substring(text, 6, 9)}">截取字符串</h6>
+     <h6 th:text="${#strings.length(text)}">获得长度</h6>
+     <h6 th:text="${#strings.randomAlphanumeric(6)}">随机字符串</h6>
+     <h6 th:text="${#strings.equals(text, 'hello text....')}"></h6>
+     ```
+
+   - objects：对objects的功能类操作。
+
+   - bools：对布尔值求值的功能方法。
+
+   - arrays：对数组的功能类方法。
+
+   - lists：对lists功能类方法。
+
+   - sets：set集合
+
+   - maps：map集合
+
+     ...
+
 ##### 使用Thymeleaf布局
+
+使用`thymeleaf`布局非常的方便
+在`/resources/templates/`目录下创建`footer.html`，内容如下
+
+```html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <body>
+        <footer th:fragment="copy(title)">
+            &copy; 2020 开课吧版权所有<br>
+            <span th:text="${title}">title footer</span>
+        </footer>
+    </body>
+</html>
+```
+
+在页面任何地方引入：
+
+```html
+<h5>thymeleaf布局</h5>
+<div th:insert="footer :: copy('开课吧1')"></div>
+<div th:replace="footer :: copy('开课吧2')"></div>
+<div th:include="footer :: copy('开课吧3')"></div>
+```
+
+- `th:insert` ：保留自己的主标签，保留th:fragment的主标签。
+- `th:replace` ：不要自己的主标签，保留th:fragment的主标签。
+- `th:include` ：保留自己的主标签，不要th:fragment的主标签。（官方3.0后不推荐）。
+
+返回的HTML如下：
+
+```html
+<h5>thymeleaf布局</h5>
+<div><footer>
+    &copy; 2020 开课吧版权所有<br>
+    <span>开课吧</span>
+    </footer></div>
+<footer>
+    &copy; 2020 开课吧版权所有<br>
+    <span>开课吧</span>
+</footer>
+<div>
+    &copy; 2020 开课吧版权所有<br>
+    <span>开课吧</span>
+</div>
+```
 
 ### 九、Mybatis Plus
 
 > `Mybatis-Plus`（简称MP）是一个 `Mybatis` 的增强工具，在 `Mybatis` 的基础上只做增强不做改变，避免了我们重复CRUD语句。
 
-#### 1. 快速入门
+
 
 
 

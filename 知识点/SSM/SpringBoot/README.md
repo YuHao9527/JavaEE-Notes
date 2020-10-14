@@ -1292,7 +1292,7 @@ spring.thymeleaf.cache=false
   - 文字标记（Literal tokens）: `one, sometext, main,…`
 - 文本操作（Text operations）
   - 字符串连接（String concatenation）：`+`
-  - 文本替换（Literal substitutions）：|The name is ${name}|`
+  - 文本替换（Literal substitutions）：`|The name is ${name}|`
 - 算术运算（Arithmetic operations）
   - 二元运算符（Binary operators）: `+, -, *, /, %`
   - 减号（单目运算符）Minus sign（unary operator）：`-`
@@ -1413,7 +1413,7 @@ spring.thymeleaf.cache=false
 
 5. 内联js
 
-   内联文本：[[…]]内联文本的表示方式，使用时，必须先用`th:inline="javascript"`激活(`th:inline="none"`关闭)，`th:inline`可以在父级标签内使用，甚至作为body的标签。内联文本尽管比`th:text`的代码少，但不利于原型显示。
+   内联js：[[…]]内联文本的表示方式，使用时，必须先用`th:inline="javascript"`激活(`th:inline="none"`关闭)，`th:inline`可以在父级标签内使用，甚至作为body的标签。
 
    ```html
    <h5>内联js</h5>
@@ -1440,11 +1440,10 @@ spring.thymeleaf.cache=false
 
    - numbers：格式化数字的功能方法类。
 
-   - strings：字符串对象的功能类，contains,startWiths,prepending/appending等等。
+   - strings：字符串对象的功能类，`contains,startWiths,prepending/appending`等等。
 
      ```html
      <h5>内置变量</h5>
-     <h6 th:text="${#dates.createNow()}">获取当前日期</h6>
      <h6 th:text="${#strings.substring(text, 6, 9)}">截取字符串</h6>
      <h6 th:text="${#strings.length(text)}">获得长度</h6>
      <h6 th:text="${#strings.randomAlphanumeric(6)}">随机字符串</h6>
@@ -1517,9 +1516,4 @@ spring.thymeleaf.cache=false
 
 > `Mybatis-Plus`（简称MP）是一个 `Mybatis` 的增强工具，在 `Mybatis` 的基础上只做增强不做改变，避免了我们重复CRUD语句。
 
-
-
-
-
-
-
+[详细教程与文档：https://baomidou.com/guide/](https://baomidou.com/guide/)
